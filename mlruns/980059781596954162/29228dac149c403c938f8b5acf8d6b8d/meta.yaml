@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/OpenClassrooms/Projet7/mlruns/980059781596954162/29228dac149c403c938f8b5acf8d6b8d/artifacts
+end_time: 1678811260852
+entry_point_name: ''
+experiment_id: '980059781596954162'
+lifecycle_stage: active
+run_id: 29228dac149c403c938f8b5acf8d6b8d
+run_name: blushing-crab-485
+run_uuid: 29228dac149c403c938f8b5acf8d6b8d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1678811189714
+status: 3
+tags: []
+user_id: Sam

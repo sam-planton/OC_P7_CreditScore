@@ -1,0 +1,86 @@
+Row_name,Row_name_clean,Table,Row,Description,Special,New_Row
+OCCUPATION_TYPE_IT staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+NAME_FAMILY_STATUS_Unknown,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+OCCUPATION_TYPE_Secretaries,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+OCCUPATION_TYPE_Low-skill Laborers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+ACTIVE_DAYS_CREDIT_ENDDATE_MAX,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+CNT_CHILDREN,CNT_CHILDREN,application_{train|test}.csv,CNT_CHILDREN,Number of children the client has,,CNT_CHILDREN
+AMT_GOODS_PRICE,AMT_GOODS_PRICE,application_{train|test}.csv,AMT_GOODS_PRICE,For consumer loans it is the price of the goods for which the loan is given,,AMT_GOODS_PRICE
+NAME_FAMILY_STATUS_Married,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+OCCUPATION_TYPE_High skill tech staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+HOUR_APPR_PROCESS_START,HOUR_APPR_PROCESS_START,application_{train|test}.csv,HOUR_APPR_PROCESS_START,Approximately at what hour did the client apply for the loan,rounded,HOUR_APPR_PROCESS_START
+OCCUPATION_TYPE_Medicine staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+OCCUPATION_TYPE_Security staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+NAME_EDUCATION_TYPE_Higher education,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+AMT_ANNUITY,AMT_ANNUITY,application_{train|test}.csv,AMT_ANNUITY,Loan annuity,,AMT_ANNUITY
+OCCUPATION_TYPE_Core staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+PREV_DAYS_DECISION_MEAN,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+PREV_NAME_TYPE_SUITE_Unaccompanied_MEAN,NAME_TYPE_SUITE,application_{train|test}.csv,NAME_TYPE_SUITE,Who was accompanying client when he was applying for the loan,,NAME_TYPE_SUITE
+INSTAL_DBD_MAX,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+INSTAL_DBD_MAX,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+EXT_SOURCE_1,EXT_SOURCE_1,application_{train|test}.csv,EXT_SOURCE_1,Normalized score from external data source,normalized,EXT_SOURCE_1
+OCCUPATION_TYPE_Managers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+NAME_FAMILY_STATUS_Widow,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+DAYS_ID_PUBLISH,DAYS_ID_PUBLISH,application_{train|test}.csv,DAYS_ID_PUBLISH,How many days before the application did client change the identity document with which he applied for the loan,time only relative to the application,DAYS_ID_PUBLISH
+APPROVED_AMT_ANNUITY_MEAN,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+OCCUPATION_TYPE_Private service staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+APPROVED_CNT_PAYMENT_SUM,PREV_CNT_PAYMENT,previous_application.csv,CNT_PAYMENT,Term of previous credit at application of the previous application,,PREV_CNT_PAYMENT
+AMT_INCOME_TOTAL,AMT_INCOME_TOTAL,application_{train|test}.csv,AMT_INCOME_TOTAL,Income of the client,,AMT_INCOME_TOTAL
+NAME_EDUCATION_TYPE_Lower secondary,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+CLOSED_DAYS_CREDIT_MAX,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+PREV_DAYS_DECISION_MIN,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+APPROVED_DAYS_DECISION_MAX,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+DAYS_BIRTH,DAYS_BIRTH,application_{train|test}.csv,DAYS_BIRTH,Client's age in days at the time of application,time only relative to the application,DAYS_BIRTH
+BURO_DAYS_CREDIT_ENDDATE_MAX,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+BURO_DAYS_CREDIT_MIN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+ACTIVE_DAYS_CREDIT_MAX,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+NAME_EDUCATION_TYPE_Secondary / secondary special,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+INSTAL_AMT_PAYMENT_MEAN,INSTAL_AMT_PAYMENT,installments_payments.csv,AMT_PAYMENT,What the client actually paid on previous credit on this installment,,INSTAL_AMT_PAYMENT
+NAME_FAMILY_STATUS_Single / not married,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+PREV_DAYS_DECISION_MAX,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+BURO_DAYS_CREDIT_UPDATE_MEAN,BURO_DAYS_CREDIT_UPDATE,bureau.csv,DAYS_CREDIT_UPDATE,How many days before loan application did last information about the Credit Bureau credit come,time only relative to the application,BURO_DAYS_CREDIT_UPDATE
+INSTAL_DBD_SUM,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+INSTAL_DBD_SUM,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+INSTAL_PAYMENT_PERC_SUM,INSTAL_PAYMENT_PERC,,,What the client actually paid on previous credit on this installment relative to What was the prescribed installment amount of previous credit on this installment,,INSTAL_PAYMENT_PERC
+NAME_FAMILY_STATUS_Civil marriage,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+POS_MONTHS_BALANCE_MEAN,POS_MONTHS_BALANCE,POS_CASH_balance.csv,MONTHS_BALANCE,"Month of balance relative to application date (-1 means the information to the freshest monthly snapshot, 0 means the information at application - often it will be the same as -1 as many banks are not updating the information to Credit Bureau regularly )",time only relative to the application,POS_MONTHS_BALANCE
+NAME_EDUCATION_TYPE_Academic degree,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+ACTIVE_DAYS_CREDIT_ENDDATE_MIN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+INSTAL_DAYS_ENTRY_PAYMENT_MAX,INSTAL_DAYS_ENTRY_PAYMENT,installments_payments.csv,DAYS_ENTRY_PAYMENT,When was the installments of previous credit paid actually (relative to application date of current loan),time only relative to the application,INSTAL_DAYS_ENTRY_PAYMENT
+OCCUPATION_TYPE_Cooking staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+OCCUPATION_TYPE_Waiters/barmen staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+EXT_SOURCE_2,EXT_SOURCE_2,application_{train|test}.csv,EXT_SOURCE_2,Normalized score from external data source,normalized,EXT_SOURCE_2
+CLOSED_DAYS_CREDIT_ENDDATE_MEAN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+CODE_GENDER,CODE_GENDER,application_{train|test}.csv,CODE_GENDER,Gender of the client,,CODE_GENDER
+OCCUPATION_TYPE_Laborers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+OCCUPATION_TYPE_Realty agents,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+DAYS_REGISTRATION,DAYS_REGISTRATION,application_{train|test}.csv,DAYS_REGISTRATION,How many days before the application did client change his registration,time only relative to the application,DAYS_REGISTRATION
+BURO_AMT_CREDIT_SUM_MEAN,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+INSTAL_AMT_PAYMENT_MIN,INSTAL_AMT_PAYMENT,installments_payments.csv,AMT_PAYMENT,What the client actually paid on previous credit on this installment,,INSTAL_AMT_PAYMENT
+NAME_EDUCATION_TYPE_Incomplete higher,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+AMT_CREDIT,AMT_CREDIT,application_{train|test}.csv,AMT_CREDIT,Credit amount of the loan,,AMT_CREDIT
+INCOME_CREDIT_PERC,INCOME_CREDIT_PERC,,,Income of the client relative to Credit amount of the loan,,INCOME_CREDIT_PERC
+OCCUPATION_TYPE_Cleaning staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+PREV_APP_CREDIT_PERC_MEAN,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+EXT_SOURCE_3,EXT_SOURCE_3,application_{train|test}.csv,EXT_SOURCE_3,Normalized score from external data source,normalized,EXT_SOURCE_3
+APPROVED_CNT_PAYMENT_MEAN,PREV_CNT_PAYMENT,previous_application.csv,CNT_PAYMENT,Term of previous credit at application of the previous application,,PREV_CNT_PAYMENT
+PAYMENT_RATE,PAYMENT_RATE,,,Loan annuity relative to Credit amount of the loan,,PAYMENT_RATE
+CLOSED_DAYS_CREDIT_UPDATE_MEAN,BURO_DAYS_CREDIT_UPDATE,bureau.csv,DAYS_CREDIT_UPDATE,How many days before loan application did last information about the Credit Bureau credit come,time only relative to the application,BURO_DAYS_CREDIT_UPDATE
+INSTAL_DBD_MEAN,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+INSTAL_DBD_MEAN,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+OCCUPATION_TYPE_Drivers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+PREV_AMT_ANNUITY_MEAN,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+OCCUPATION_TYPE_Sales staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+REGION_POPULATION_RELATIVE,REGION_POPULATION_RELATIVE,application_{train|test}.csv,REGION_POPULATION_RELATIVE,Normalized population of region where client lives (higher number means the client lives in more populated region),normalized ,REGION_POPULATION_RELATIVE
+NAME_FAMILY_STATUS_Separated,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+OCCUPATION_TYPE_HR staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+DAYS_LAST_PHONE_CHANGE,DAYS_LAST_PHONE_CHANGE,application_{train|test}.csv,DAYS_LAST_PHONE_CHANGE,How many days before application did client change phone,,DAYS_LAST_PHONE_CHANGE
+ANNUITY_INCOME_PERC,ANNUITY_INCOME_PERC,,,Loan annuity relative to Income of the client,,ANNUITY_INCOME_PERC
+ACTIVE_DAYS_CREDIT_MIN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+BURO_DAYS_CREDIT_MEAN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+OCCUPATION_TYPE_Accountants,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+APPROVED_AMT_CREDIT_MAX,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+DAYS_EMPLOYED,DAYS_EMPLOYED,application_{train|test}.csv,DAYS_EMPLOYED,How many days before the application the person started current employment,time only relative to the application,DAYS_EMPLOYED
+ACTIVE_DAYS_CREDIT_UPDATE_MEAN,BURO_DAYS_CREDIT_UPDATE,bureau.csv,DAYS_CREDIT_UPDATE,How many days before loan application did last information about the Credit Bureau credit come,time only relative to the application,BURO_DAYS_CREDIT_UPDATE
+CLOSED_DAYS_CREDIT_ENDDATE_MAX,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+APPROVED_AMT_ANNUITY_MAX,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY

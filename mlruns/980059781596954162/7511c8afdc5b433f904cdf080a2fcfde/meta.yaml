@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/OpenClassrooms/Projet7/mlruns/980059781596954162/7511c8afdc5b433f904cdf080a2fcfde/artifacts
+end_time: 1678811260852
+entry_point_name: ''
+experiment_id: '980059781596954162'
+lifecycle_stage: active
+run_id: 7511c8afdc5b433f904cdf080a2fcfde
+run_name: unleashed-gull-215
+run_uuid: 7511c8afdc5b433f904cdf080a2fcfde
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1678811189714
+status: 3
+tags: []
+user_id: Sam
