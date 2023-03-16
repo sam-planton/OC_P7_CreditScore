@@ -121,7 +121,7 @@ def show_client_data(data_client, data_group, description_df, varlist):
                 
 def main():
     
-    MLFLOW_URI = 'http://127.0.0.1:1234/invocations'
+    # MLFLOW_URI = 'http://127.0.0.1:1234/invocations'
     run_id = 'bfdcbff1ea7c41fba3cc512c4ce9c584'
     
     # Config
