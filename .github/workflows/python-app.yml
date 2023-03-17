@@ -30,7 +30,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-    
+
+    - name: Run tests
+      env:
+        API_URL: http://13.39.20.81:5000/predict
+      run: pytest test_api.py
         
 #     - name: Lint with flake8
 #       run: |
