@@ -6,3 +6,4 @@ numpy
 shap
 mlflow
 matplotlib
+streamlit_shap
