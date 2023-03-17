@@ -123,12 +123,12 @@ def show_client_data(data_client, data_group, description_df, varlist):
                 
 def main():
 
-    # Get the cloud data location for the run of interest 
+    # Get the cloud data location for the run of interest
     mlflow.set_tracking_uri("http://13.37.31.96:5000")
     client = mlflow.tracking.MlflowClient()
-    experiment = mlflow.get_experiment_by_name('MLflow_CompareEstimators')
+    experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
     runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
-    run_id = runs[runs['tags.mlflow.runName'] == 'SVC_'].run_id.values[0]
+    run_id = runs[runs['tags.mlflow.runName'] == 'LogisticRegression_'].run_id.values[0]
     run = client.get_run(run_id)
     artifacts_uri = run.info.artifact_uri
     metrics = run.data.metrics
