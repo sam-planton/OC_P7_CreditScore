@@ -15,6 +15,7 @@ artifacts_uri = run.info.artifact_uri
 model_uri = f"{artifacts_uri}/model"
 # model = mlflow.pyfunc.load_model(model_uri)
 model = mlflow.sklearn.load_model(model_uri)
+print(model_uri)
 
 # Initialize Flask app
 app = Flask(__name__)
