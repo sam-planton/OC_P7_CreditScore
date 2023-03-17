@@ -44,7 +44,8 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
-        script: |
+        run: |
+          curl -LJO https://github.com/username/repo-name/raw/main/path/to/api.py
           python api.py
 
     - name: Run tests
