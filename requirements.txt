@@ -7,3 +7,4 @@ shap
 mlflow
 matplotlib
 streamlit_shap
+imblearn
