@@ -45,8 +45,8 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         run: |
-          curl -LJO https://github.com/username/repo-name/raw/main/path/to/api.py
-          python api.py
+          curl -LJO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
+          python3 api.py
 
     - name: Run tests
       env:
