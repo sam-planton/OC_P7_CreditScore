@@ -44,7 +44,6 @@ def fetch_data(artifacts_uri):
     return Xtrain, Xtrain_clusters, Xtest_samples, Xtest_samples_clusters, description_df, metrics
 
 
-
 @st.cache_resource    
 def fetch_model(run_id):
     # Load the saved model from MLflow
@@ -128,8 +127,7 @@ def main():
     mlflow.set_tracking_uri("http://13.37.31.96:5000")
     client = mlflow.tracking.MlflowClient()
     experiment = mlflow.get_experiment_by_name('MLflow_CompareEstimators')
-    experiment_id = experiment.experiment_id
-    runs = mlflow.search_runs(experiment_ids=experiment_id)
+    runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
     run_id = runs[runs['tags.mlflow.runName'] == 'SVC_'].run_id.values[0]
     run = client.get_run(run_id)
     artifacts_uri = run.info.artifact_uri
