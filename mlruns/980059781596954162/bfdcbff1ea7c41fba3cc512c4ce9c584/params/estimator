@@ -1,5 +1,0 @@
-Pipeline(steps=[['SMOTE_over', SMOTE(random_state=42, sampling_strategy=0.5)],
-                ['SMOTE_under',
-                 RandomUnderSampler(random_state=42, sampling_strategy=0.75)],
-                ['Scaler', MinMaxScaler()],
-                ['Model', LogisticRegression(max_iter=2000)]])
