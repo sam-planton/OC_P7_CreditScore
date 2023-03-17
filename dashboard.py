@@ -149,9 +149,9 @@ def main():
     # st.markdown("---") 
     # pred = 0
     
-    art_uri = f"{artifacts_uri}/cv_results.csv"
-    df = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
-    st.write(df)
+    # art_uri = f"{artifacts_uri}/cv_results.csv"
+    # df = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
+    # st.write(df)
     model_uri = f"{artifacts_uri}/model"
     model = mlflow.sklearn.load_model(model_uri)
     st.write(model.best_params_)
