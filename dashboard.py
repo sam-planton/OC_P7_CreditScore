@@ -125,7 +125,7 @@ def show_client_data(data_client, data_group, description_df, varlist):
 def main():
 
     # Get the cloud data location for the run of interest 
-    mlflow.set_tracking_uri("http://13.39.20.81:5000")
+    mlflow.set_tracking_uri("http://13.37.31.96:5000")
     client = mlflow.tracking.MlflowClient()
     experiment = mlflow.get_experiment_by_name('MLflow_CompareEstimators')
     experiment_id = experiment.experiment_id
