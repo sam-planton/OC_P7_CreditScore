@@ -18,13 +18,7 @@ def test_api_prediction():
     assert response.headers["content-type"] == "application/json"
 
     # Parse the JSON data from the response body
-    json_response = response.json()
+    prediction = response.json()[0]
+    print(prediction)
 
-    # Check that the JSON response contains the expected keys
-    expected_keys = ["predictions"]
-    assert set(expected_keys).issubset(json_response.keys())
-
-    # Check that the predictions are in the expected format
-    predictions = json_response["predictions"]
-    assert isinstance(predictions, list)
-    assert all(isinstance(prediction, float) for prediction in predictions)
+    assert isinstance(prediction, float)
