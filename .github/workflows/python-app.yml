@@ -63,10 +63,6 @@ jobs:
         API_URL: http://${{ secrets.SERVER_IP }}:8000/predict
       run: pytest test_api.py
 
-
-
-
-
 #     - name: Lint with flake8
 #       run: |
 #         # stop the build if there are Python syntax errors or undefined names
@@ -87,3 +83,6 @@ jobs:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
         heroku_app_name: oc-p7-creditscore
         heroku_email: samuel.planton@gmail.com
+    - name: Start app
+      run: |
+        heroku run python dashboard.py
