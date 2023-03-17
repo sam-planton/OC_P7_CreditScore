@@ -50,7 +50,7 @@ jobs:
 
     - name: Run tests
       env:
-        API_URL: http://13.39.20.81:5000/predict
+        API_URL: http://13.39.20.81:8000/predict
       run: pytest test_api.py
 
 
