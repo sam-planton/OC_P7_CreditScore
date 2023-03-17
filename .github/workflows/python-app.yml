@@ -32,19 +32,12 @@ jobs:
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Deploy to Server
-      uses: easingthemes/ssh-deploy@v2.1.5
+    - name: Set up SSH key
+      uses: webfactory/ssh-agent@v0.5.0
       with:
         ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
-        ssh-port: ${{ secrets.SERVER_SSH_PORT }}
-        args: "sudo chown -R www-data:www-data /var/www/html && sudo chmod -R 775 /var/www/html"
-        local-ssh-port: 2222
-        local-folder: ./
-        server-ip: ${{ secrets.SERVER_IP }}
-        server-user: ${{ secrets.SERVER_USER }}
-        server-destination: /var/www/html
 
-    - name: Start Flask API on Server
+    - name: Execute script to launch API on server
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.SERVER_IP }}
@@ -52,8 +45,7 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          cd /var/www/html
-          sudo -E nohup gunicorn -w 4 -b 0.0.0.0:5000 api:app > /dev/null 2>&1 &
+          python api.py
 
     - name: Run tests
       env:
