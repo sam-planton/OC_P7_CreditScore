@@ -15,41 +15,46 @@ import os
 def fetch_data(artifacts_uri):
     
     # Load the training data
-    art_uri = 'runs:/'+run_id+'/Xtrain.csv'
+    # art_uri = 'runs:/'+run_id+'/Xtrain.csv'
+    art_uri = f"{artifacts_uri}/Xtrain.csv"
     Xtrain = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
-    art_uri = 'runs:/'+run_id+'/Xtrain_clusters.csv'
+    # art_uri = 'runs:/'+run_id+'/Xtrain_clusters.csv'
+    art_uri = f"{artifacts_uri}/Xtrain_clusters.csv"
     Xtrain_clusters = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
 
     # Load sample clients
-    art_uri = 'runs:/'+run_id+'/Xtest_samples.csv'
+    # art_uri = 'runs:/'+run_id+'/Xtest_samples.csv'
+    art_uri = f"{artifacts_uri}/Xtest_samples.csv"
     Xtest_samples = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
-    art_uri = 'runs:/'+run_id+'/Xtest_samples_clusters.csv'
+    # art_uri = 'runs:/'+run_id+'/Xtest_samples_clusters.csv'
+    art_uri = f"{artifacts_uri}/Xtest_samples_clusters.csv"
     Xtest_samples_clusters = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
 
     # Load features description
-    desc_uri = 'runs:/'+run_id+'/description_df.csv'
+    # desc_uri = 'runs:/'+run_id+'/description_df.csv'
+    art_uri = f"{artifacts_uri}/description_df.csv"
     description_df = pd.read_csv(mlflow.artifacts.download_artifacts(desc_uri))
    
-    # Load some metrics
-    run = mlflow.get_run(run_id)
-    Optimal_threshold = run.data.metrics['Optimal_threshold']
-    roc_auc =  run.data.metrics['test_roc_auc_cv']
-    accuracy =  run.data.metrics['test_accuracy_cv']
-    custom_score_v2 =  run.data.metrics['test_custom_score_v2_cv']
-    metrics = {'Optimal_threshold':Optimal_threshold,
-               'Accuracy':accuracy,
-               'ROC AUC':roc_auc,
-               'Score métier':custom_score_v2}
+    # # Load some metrics
+    # run = mlflow.get_run(run_id)
+    # Optimal_threshold = run.data.metrics['Optimal_threshold']
+    # roc_auc =  run.data.metrics['test_roc_auc_cv']
+    # accuracy =  run.data.metrics['test_accuracy_cv']
+    # custom_score_v2 =  run.data.metrics['test_custom_score_v2_cv']
+    # metrics = {'Optimal_threshold':Optimal_threshold,
+    #            'Accuracy':accuracy,
+    #            'ROC AUC':roc_auc,
+    #            'Score métier':custom_score_v2}
     
-    return Xtrain, Xtrain_clusters, Xtest_samples, Xtest_samples_clusters, description_df, metrics
+    return Xtrain, Xtrain_clusters, Xtest_samples, Xtest_samples_clusters, description_df
 
 
 @st.cache_resource    
-def fetch_model(run_id):
+def fetch_model(artifacts_uri):
     # Load the saved model from MLflow
-    model_uri = github_url+'artifacts'+'/model'
-    model = mlflow.sklearn.load_model(model_uri)    
-    
+    model_uri = f"{artifacts_uri}/model"
+    model = mlflow.sklearn.load_model(model_uri)
+
     return model
 
 
@@ -58,7 +63,7 @@ def compute_shap(_model, Xtrain):
     # Compute SHAP values using training data & model
     def predict_fn(x): return _model.predict_proba(x)[:, 1]  # to get only predict of 2nd class
     explainer = shap.KernelExplainer(predict_fn, shap.kmeans(Xtrain, 30))
-    shap_values = explainer.shap_values(Xtrain.sample(100))
+    shap_values = explainer.shap_values(Xtrain.sample(50))
     
     return explainer, shap_values
 
@@ -146,92 +151,87 @@ def main():
     
     # st.markdown("---") 
     # pred = 0
-    
     # art_uri = f"{artifacts_uri}/cv_results.csv"
     # df = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
     # st.write(df)
-    model_uri = f"{artifacts_uri}/model"
-    model = mlflow.sklearn.load_model(model_uri)
-    st.write(model.best_params_)
-    
-    st.write(pd.DataFrame(run.data.metrics, index=[0]))
+    # st.write(model.best_params_)
+    # st.write(pd.DataFrame(run.data.metrics, index=[0]))
     
     # =========================== FETCH DATA & MODEL =========================== #
-    # # model, Xtrain, Xtrain_clusters, Xtest_samples, Xtest_samples_clusters, description_df, metrics, explainer = fetch_data(run_id)
-    # Xtrain, Xtrain_clusters, Xtest_samples, Xtest_samples_clusters, description_df, metrics = fetch_data(artifacts_uri)
-    # model = fetch_model(run_id)
-    # explainer, shap_values = compute_shap(model, Xtrain)
+    Xtrain, Xtrain_clusters, Xtest_samples, Xtest_samples_clusters, description_df, metrics = fetch_data(artifacts_uri)
+    model = fetch_model(artifacts_uri)
+    explainer, shap_values = compute_shap(model, Xtrain)
     
-#     # Compute feature importances based on the SHAP values
-#     feature_importances_df = pd.DataFrame(np.mean(shap_values, axis=0), index=Xtrain.columns, columns=['SHAP'])
-#     feature_importances_df['abs_SHAP'] = feature_importances_df['SHAP'].abs()
-#     # Print feature importances
-#     # st.write(feature_importances_df)
+    # Compute feature importances based on the SHAP values
+    feature_importances_df = pd.DataFrame(np.mean(shap_values, axis=0), index=Xtrain.columns, columns=['SHAP'])
+    feature_importances_df['abs_SHAP'] = feature_importances_df['SHAP'].abs()
+    # Print feature importances
+    # st.write(feature_importances_df)
     
-#     # =========================== DASHBOARD ITEMS =========================== #      
-#     tab1, tab2, tab3, tab4 = st.tabs(['🗠 Visualiser les données du client',
-#                                       '💯 Calculer le score crédit du client',
-#                                       '📊 Explications du score',
-#                                       '⚙️ Informations sur le modèle'])
+    # =========================== DASHBOARD ITEMS =========================== #
+    tab1, tab2, tab3, tab4 = st.tabs(['🗠 Visualiser les données du client',
+                                      '💯 Calculer le score crédit du client',
+                                      '📊 Explications du score',
+                                      '⚙️ Informations sur le modèle'])
    
-#     # Sidebar select client
-#     clist = ['Client '+str(x+1) for x in range(len(Xtest_samples))]
-#     clist = ['<Sélectionnez un client>'] + clist
-#     client_id = clist[0]  # default
-#     client_id = st.sidebar.selectbox('Sélectionnez le client', clist, key=1000)
-#     # if pred in globals():
-#     #     st.sidebar.metric('Score :', value=('%d/100' % ((1-pred)*100)))
-#     # else:
-#     #     st.sidebar.write('Score en attente')
+    # Sidebar select client
+    clist = ['Client '+str(x+1) for x in range(len(Xtest_samples))]
+    clist = ['<Sélectionnez un client>'] + clist
+    client_id = clist[0]  # default
+    client_id = st.sidebar.selectbox('Sélectionnez le client', clist, key=1000)
+    # if pred in globals():
+    #     st.sidebar.metric('Score :', value=('%d/100' % ((1-pred)*100)))
+    # else:
+    #     st.sidebar.write('Score en attente')
         
-#     # ======= Show client data
-#     with tab1:
-#         st.header('🗠 Visualiser les données du client')
-#         if client_id == clist[0]:
-#             st.write('_Veuillez sélectionner un des clients dans le menu de la barre latérale_')
-#         else:
-#             st.subheader('Paramètres')   
-#             data_sample = Xtest_samples.iloc[[clist.index(client_id)-1]]
-#             data_sample_cluster = Xtest_samples_clusters.iloc[[clist.index(client_id)-1]]
-#             data_sample = data_sample.reset_index(drop=True)    
-#             col1, col2, col3 = st.columns([1, 1.5, 0.5]) 
-#             with col1:
-#                 options = ['Tous les clients', 'Même catégorie socio-démographique', 'Même groupe - proche sur toutes variables']
-#                 helptxt = 'Comparer à tous les clients  \n'\
-#                           'Au groupe de clients similaires sur un sous-ensemble de variables socio-démographiques  \n'\
-#                           'Au groupe de clients similaires sur une combinaisons de toutes les varialbes'
-#                 option = st.selectbox(f'Sélectionnez la base de comparaison client', options, help=helptxt)
-#                 if option == options[0]:
-#                     Xgroup = Xtrain
-#                 elif option == options[1]:
-#                     mask = Xtrain_clusters['cluster_SocioDemo'] == data_sample_cluster['cluster_SocioDemo'].values[0]
-#                     Xgroup = Xtrain[mask]
-#                 elif option == options[2]:
-#                     mask = Xtrain_clusters['cluster_FullData'] == data_sample_cluster['cluster_FullData'].values[0]
-#                     Xgroup = Xtrain[mask]
-#             with col2:
-#                 # helptxt = 'Toutes, ou limiter aux 6 plus importantes selon le modèle.  '\
-#                 #           '\nPositives = font baisser le score.  \nNégatives = font augmenter le score'
-#                 helptxt = 'Toutes, ou limiter aux 6 plus importantes selon le modèle'
-#                 genre = st.radio("Quelles variables rechercher ?",('Toutes',
-#                                                                    'Uniquement les plus importantes pour le score'), help=helptxt)
-#                 if genre == 'Toutes':
-#                     varlist = sorted(data_sample.columns)
-#                 elif  genre == 'Uniquement les plus importantes pour le score':
-#                     feature_importances_df = feature_importances_df.sort_values(by='abs_SHAP', ascending=False)
-#                     varlist = sorted(feature_importances_df[:15].index)
-#                 # elif  genre == 'Uniquement les plus importantes pour le score (positives)':
-#                 #     feature_importances_df = feature_importances_df.sort_values(by='SHAP', ascending=False)
-#                 #     varlist = sorted(feature_importances_df[:6].index)
-#                 # elif  genre == 'Uniquement les plus importantes pour le score (négatives)':
-#                 #     feature_importances_df = feature_importances_df.sort_values(by='SHAP', ascending=True)
-#                 #     varlist = sorted(feature_importances_df[:6].index)
-#                 else:
-#                     varlist = sorted(data_sample.columns)[:10] #top_features
-#             st.subheader('Graphiques')
-#             show_client_data(data_sample, Xgroup, description_df, varlist)
+    # ======= Show client data
+    with tab1:
+        st.header('🗠 Visualiser les données du client')
+        if client_id == clist[0]:
+            st.write('_Veuillez sélectionner un des clients dans le menu de la barre latérale_')
+        else:
+            st.subheader('Paramètres')
+            data_sample = Xtest_samples.iloc[[clist.index(client_id)-1]]
+            data_sample_cluster = Xtest_samples_clusters.iloc[[clist.index(client_id)-1]]
+            data_sample = data_sample.reset_index(drop=True)
+            col1, col2, col3 = st.columns([1, 1.5, 0.5])
+            with col1:
+                options = ['Tous les clients', 'Même catégorie socio-démographique', 'Même groupe - proche sur toutes variables']
+                helptxt = 'Comparer à tous les clients  \n'\
+                          'Au groupe de clients similaires sur un sous-ensemble de variables socio-démographiques  \n'\
+                          'Au groupe de clients similaires sur une combinaisons de toutes les varialbes'
+                option = st.selectbox(f'Sélectionnez la base de comparaison client', options, help=helptxt)
+                if option == options[0]:
+                    Xgroup = Xtrain
+                elif option == options[1]:
+                    mask = Xtrain_clusters['cluster_SocioDemo'] == data_sample_cluster['cluster_SocioDemo'].values[0]
+                    Xgroup = Xtrain[mask]
+                elif option == options[2]:
+                    mask = Xtrain_clusters['cluster_FullData'] == data_sample_cluster['cluster_FullData'].values[0]
+                    Xgroup = Xtrain[mask]
+            with col2:
+                # helptxt = 'Toutes, ou limiter aux 6 plus importantes selon le modèle.  '\
+                #           '\nPositives = font baisser le score.  \nNégatives = font augmenter le score'
+                helptxt = 'Toutes, ou limiter aux 6 plus importantes selon le modèle'
+                genre = st.radio("Quelles variables rechercher ?",('Toutes',
+                                                                   'Uniquement les plus importantes pour le score'), help=helptxt)
+                if genre == 'Toutes':
+                    varlist = sorted(data_sample.columns)
+                elif  genre == 'Uniquement les plus importantes pour le score':
+                    feature_importances_df = feature_importances_df.sort_values(by='abs_SHAP', ascending=False)
+                    varlist = sorted(feature_importances_df[:15].index)
+                # elif  genre == 'Uniquement les plus importantes pour le score (positives)':
+                #     feature_importances_df = feature_importances_df.sort_values(by='SHAP', ascending=False)
+                #     varlist = sorted(feature_importances_df[:6].index)
+                # elif  genre == 'Uniquement les plus importantes pour le score (négatives)':
+                #     feature_importances_df = feature_importances_df.sort_values(by='SHAP', ascending=True)
+                #     varlist = sorted(feature_importances_df[:6].index)
+                else:
+                    varlist = sorted(data_sample.columns)[:10] #top_features
+            st.subheader('Graphiques')
+            show_client_data(data_sample, Xgroup, description_df, varlist)
 
-#     # st.markdown("---") 
+    # st.markdown("---")
     
 #     # ======= Show client score prediction
 #     with tab2:
