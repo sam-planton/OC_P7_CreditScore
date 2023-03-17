@@ -45,7 +45,7 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          python api.py
+          python3 api.py
 
     - name: Run tests
       env:
