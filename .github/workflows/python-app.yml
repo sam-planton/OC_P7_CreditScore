@@ -83,6 +83,6 @@ jobs:
         heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
         heroku_app_name: oc-p7-creditscore
         heroku_email: samuel.planton@gmail.com
-    - name: Start app
-      run: |
-        heroku run python dashboard.py
+#    - name: Start app
+#      run: |
+#        heroku run python dashboard.py
