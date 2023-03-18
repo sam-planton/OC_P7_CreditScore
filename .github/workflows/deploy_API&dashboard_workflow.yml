@@ -50,15 +50,15 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          # Download the api.py file
-          curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
-          
           # Check if the api.py process is already running and kill it
           if pgrep -f "api.py" > /dev/null; then
             echo "api.py process is already running, killing it..."
             pkill -f "api.py" &
           fi
           
+          # Download the api.py file
+          curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
+
           # Start the API in a screen session
           screen -S api -dm python3 api.py
 
