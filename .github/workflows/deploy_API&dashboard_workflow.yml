@@ -56,7 +56,7 @@ jobs:
           # Check if the api.py process is already running and kill it
           if pgrep -f "api.py" > /dev/null; then
             echo "api.py process is already running, killing it..."
-            pkill -f "api.py"
+            pkill -f "api.py" &
           fi
           
           # Start the API in a screen session
