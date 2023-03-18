@@ -35,14 +35,14 @@ jobs:
         ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
     - name: Lauch the MLflow tracking server on the server
-          uses: appleboy/ssh-action@master
-          with:
-            host: ${{ secrets.SERVER_IP }}
-            username: ${{ secrets.SERVER_USER }}
-            key: ${{ secrets.SERVER_SSH_KEY }}
-            port: ${{ secrets.SERVER_SSH_PORT }}
-            run: |
-              mlflow server --host 0.0.0.0 --port 5000
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        run: |
+          mlflow server --host 0.0.0.0 --port 5000
 #     - name: Lint with flake8
 #       run: |
 #         # stop the build if there are Python syntax errors or undefined names
