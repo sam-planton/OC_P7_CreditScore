@@ -39,7 +39,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
-        script: |
+        run: |
           mlflow server --host 0.0.0.0 --port 5000
 
     - name: Lauch the API on the server
@@ -49,7 +49,7 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
-        script: |
+        run: |
           curl -LJO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
           python3 api.py
 
