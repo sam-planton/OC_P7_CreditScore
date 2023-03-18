@@ -49,9 +49,14 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
-        run: |
-          curl -LJO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
+        script: |
+          # Download the api.py file
+          curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
+          # Start the API using Python
           python3 api.py
+#        run: |
+#          curl -LJO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
+#          python3 api.py
 
     - name: Run tests
       env:
