@@ -3,6 +3,8 @@ import requests
 import json
 from flask import Flask, jsonify, request
 import pandas as pd
+import signal
+import sys
 
 # Load the model from the server using its URI
 mlflow.set_tracking_uri("http://13.37.31.96:5000")
@@ -19,6 +21,15 @@ print(model_uri)
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Define a signal handler for SIGTERM
+# To avoid returning "143" and causing an error in Github workflow
+def sigterm_handler(signum, frame):
+    print("Received SIGTERM, shutting down...")
+    sys.exit(0)
+
+# Register the signal handler
+signal.signal(signal.SIGTERM, sigterm_handler)
 
 # Define a route for making predictions
 @app.route("/predict", methods=["POST"])
