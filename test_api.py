@@ -5,8 +5,11 @@ import os
 API_URL = os.environ.get("API_URL")
 
 def test_api_prediction():
+
+    print('Reading test data')
     # Load the data sample from the CSV file
     data_sample = pd.read_csv("data_sample.csv", index_col='SK_ID_CURR')
+    print(data_sample.index)
 
     # Send a POST request to the API endpoint with the data as the request body
     response = requests.post(API_URL, json=data_sample.to_dict())
