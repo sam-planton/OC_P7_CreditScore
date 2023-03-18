@@ -2,7 +2,8 @@ import requests
 import pandas as pd
 import os
 
-API_URL = os.environ.get("API_URL")
+# API_URL = os.environ.get("API_URL")
+API_URL = 'http://13.37.31.96:8000/predict'
 
 def test_api_prediction():
 
@@ -25,3 +26,5 @@ def test_api_prediction():
     print(prediction)
 
     assert isinstance(prediction, float)
+
+test_api_prediction()  # to be able to test it with Python, not only Pytest
