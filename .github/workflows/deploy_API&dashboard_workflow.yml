@@ -51,11 +51,11 @@ jobs:
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
           # Check if the api.py process is already running and kill it
-          if pgrep -f "api.py" > /dev/null; then
-            echo "api.py process is already running, killing it..."
-            pkill -f "api.py" &
-            wait $!
-          fi
+          #if pgrep -f "api.py" > /dev/null; then
+          #  echo "api.py process is already running, killing it..."
+          #  pkill -f "api.py" &
+          #  wait $!
+          #fi
           # Download the api.py file
           curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 
