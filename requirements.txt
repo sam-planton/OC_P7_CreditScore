@@ -8,3 +8,4 @@ mlflow
 matplotlib
 streamlit_shap
 imblearn
+pytest
