@@ -53,7 +53,7 @@ jobs:
           # Download the api.py file
           curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
           # Start the API using Python, use "&" to move to the next action
-          python3 api.py &
+          nohup python3 api.py
 #        run: |
 #          curl -LJO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 #          python3 api.py
