@@ -25,6 +25,7 @@ def test_api_prediction():
     prediction = response.json()[0]
     print(prediction)
 
+    # Check that the prediction value s a float
     assert isinstance(prediction, float)
 
 # test_api_prediction()  # to be able to test it with Python, not only Pytest
