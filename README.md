@@ -1,3 +1,4 @@
+![workflow status](https://github.com/sam-planton/OC_P7_CreditScore/actions/workflows/deploy_API&dashboard_workflow.yml/badge.svg)
 # OC P7 CreditScore
 Cette application Python permet d'attribuer un "score crédit" à un client basé
 sur la probabilité de défaut du client, déterminée à partir d'un modèle de machine
