@@ -31,7 +31,7 @@ def predict():
     input_df = input_df.astype("float32")
 
     # Get predictions from the loaded model
-    predictions = model.predict_proba(input_df)[:, 1]
+    predictions = model.predict_proba(input_df.to_numpy())[:, 1]
 
     # Return the predictions as a JSON response
     return jsonify(predictions.tolist())
