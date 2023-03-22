@@ -272,7 +272,7 @@ def main():
     st.set_page_config(page_title="Credit Score", page_icon=":sunglasses:", layout="wide")
 
     # Run the app using local data/model or using server-based data/model/API
-    remote_app = False
+    remote_app = True
 
     # Get the cloud data location for the run of interest (that contains data & model)
     if remote_app:
