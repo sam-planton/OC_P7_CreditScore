@@ -40,7 +40,12 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         run: |
-          mlflow server --host 0.0.0.0 --port 5000
+          # Kill processes using the need ports
+          fuser -k 5000/tcp
+          fuser -k 8000/tcp
+          
+          # Start the MLflow tracking server in a screen session
+          screen -S mlflowtrack -dm mlflow server --host 0.0.0.0 --port 5000
 
     - name: Lauch the API on the server
       uses: appleboy/ssh-action@master
@@ -50,12 +55,6 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          # Check if the api.py process is already running and kill it
-          #if pgrep -f "api.py" > /dev/null; then
-          #  echo "api.py process is already running, killing it..."
-          #  pkill -f "api.py" &
-          #  wait $!
-          #fi
           # Download the api.py file
           curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 
