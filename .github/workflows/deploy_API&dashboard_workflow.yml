@@ -48,7 +48,8 @@ jobs:
           # fuser -k 8000/tcp
           
           # Start the MLflow tracking server in a screen session with a terminal
-          screen -S mlflowserv -dm bash -c 'mlflow server --host 0.0.0.0 --port 5000'
+          #screen -S mlflowserv -dm bash -c 'mlflow server --host 0.0.0.0 --port 5000'
+          nohup mlflow server --host 0.0.0.0 --port 5000 > /dev/null 2>&1 &
           
           # Wait for 10 seconds before continuing
           sleep 30
@@ -68,7 +69,9 @@ jobs:
           sudo curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 
           # Start the API in a screen session with a terminal
-          screen -S python3 -dm bash -c 'python3 api.py'
+          # screen -S python3 -dm bash -c 'python3 api.py'
+          # Start the API using nohup to prevent it from terminating
+          nohup python3 api.py > /dev/null 2>&1 &
           
           # Wait for 10 seconds before continuing
           sleep 10
