@@ -3,7 +3,7 @@ from flask import Flask, jsonify, request
 import pandas as pd
 
 # Load the model from the server using its URI
-# mlflow.set_tracking_uri("http://13.37.31.96:5000")
+mlflow.set_tracking_uri("http://13.37.31.96:5000")
 client = mlflow.tracking.MlflowClient()
 experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
 runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
