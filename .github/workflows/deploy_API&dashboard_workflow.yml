@@ -41,6 +41,7 @@ jobs:
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
           ls
+          echo "Hello, World!"
           
           # Kill processes using the need ports
           fuser -k 5000/tcp
@@ -51,8 +52,10 @@ jobs:
           screen -S mlflowtrack -dm mlflow server --host 0.0.0.0 --port 5000
           
           # Wait for 10 seconds before continuing
-          sleep 10
-
+          sleep 30
+          
+          echo "Hello, World! 2"
+          
     - name: Lauch the API on the server
       uses: appleboy/ssh-action@master
       with:
