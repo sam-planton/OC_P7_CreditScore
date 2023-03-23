@@ -48,7 +48,7 @@ jobs:
           # fuser -k 8000/tcp
           
           # Start the MLflow tracking server in a screen session with a terminal
-          screen -S mlflowserv -dm bash -c "mlflow server --host 0.0.0.0 --port 5000 && disown"
+          screen -S mlflowserv -dm bash -c 'mlflow server --host 0.0.0.0 --port 5000 > /logfile.log 2>&1'
           
           # Wait for 10 seconds before continuing
           sleep 30
