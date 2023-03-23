@@ -46,7 +46,7 @@ jobs:
           # Kill processes using the need ports
           sudo fuser -k 5000/tcp
           sudo fuser -k 8000/tcp
-          sudo pkill -f api.py
+          # sudo pkill -f api.py
           
           # Start the MLflow tracking server in a screen session
           sudo screen -S mlflowtrack -dm mlflow server --host 0.0.0.0 --port 5000
