@@ -40,16 +40,14 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          ls
           echo "Hello, World!"
           
           # Kill processes using the need ports
-          sudo fuser -k 5000/tcp
-          sudo fuser -k 8000/tcp
-          # sudo pkill -f api.py
+          # fuser -k 5000/tcp
+          # fuser -k 8000/tcp
           
           # Start the MLflow tracking server in a screen session
-          sudo screen -S mlflowtrack -dm mlflow server --host 0.0.0.0 --port 5000
+          screen -S mlflow server --host 0.0.0.0 --port 5000
           
           # Wait for 10 seconds before continuing
           sleep 30
@@ -64,16 +62,25 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
-          ls
-          
           # Download the api.py file
           sudo curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 
           # Start the API in a screen session
-          sudo screen -S api -dm python3 api.py
+          screen -S python3 api.py
           
           # Wait for 10 seconds before continuing
           sleep 10
+
+    - name: Check if API is running
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SERVER_USER }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        port: ${{ secrets.SERVER_SSH_PORT }}
+        script: |
+          pgrep -f 'python3 api.py'
+          
 
     - name: Run API unittest
       env:
