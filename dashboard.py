@@ -17,7 +17,6 @@ import time
 
 @st.cache_data
 def fetch_data(artifacts_uri):
-
     # To lighten the load in memory, set columns to float32 directly when loading
     # (load a sample of the dataset to identify columns)
 
@@ -206,24 +205,35 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
 
 
 def show_client_data_bivariate(data_client, data_group, varlist):
-
-    col1, col2 = st.columns([1, 1])
+    col1, col2, col3 = st.columns([1, 1, 1])
     options = ['<Sélectionnez la variable 1>'] + varlist
 
     with col1:
         var1 = st.selectbox(f'Sélectionnez la variable 1', options, key=5551)
     with col2:
         var2 = st.selectbox(f'Sélectionnez la variable 2', options, key=5552)
+    with col3:
+        # grphtype = 'Heatmap'
+        grphtype = st.radio("Type de graphique :", ("Heatmap", "Scatterplot"))
     if (var1 != options[0]) & (var2 != options[0]):
         var3 = 'Score'
-        fig = px.scatter(data_group, x=var1, y=var2, color=var3, hover_data=[var3], color_continuous_scale='RdYlGn')
-        fig.add_trace(go.Scatter(x=[data_client[var1].values[0]], y=[data_client[var2].values[0]], mode='markers',
-                                 name='Client',
-                                 marker=dict(size=20, color='yellow', line=dict(width=2, color='black')),
-                                 showlegend=False))
-        fig.update_coloraxes(colorbar_title_side='right')
-        fig.update_layout(height=600)
-        st.plotly_chart(fig, use_container_width=True, theme=None)
+        if grphtype == 'Scatterplot':
+            # With sccaterplot
+            fig = px.scatter(data_group, x=var1, y=var2, color=var3, hover_data=[var3], color_continuous_scale='RdYlGn')
+        elif grphtype == 'Heatmap':
+            # With heatmap
+            fig = px.density_contour(data_group, x=var1, y=var2, z=var3, histfunc="avg")
+            fig.update_traces(contours_coloring="fill", contours_showlabels=False, colorscale='RdYlGn')
+            fig.update_traces(colorbar_title='Score Moyen', selector=dict(type='histogram2dcontour'))
+            # fig = px.density_heatmap(data_group, x=var1, y=var2, z=var3, histfunc="avg",
+            #                          color_continuous_scale='RdYlGn', nbinsx=100, nbinsy=100)
+        # Add client dot
+        fig.add_scatter(x=[data_client[var1].values[0]], y=[data_client[var2].values[0]], mode='markers', name='Client',
+                        marker=dict(size=20, color='yellow', line=dict(width=2, color='black')))
+        # Layout
+        # fig.update_coloraxes(colorbar_title_side='right')
+        fig.update_layout(height=600, width=600)
+        st.plotly_chart(fig, use_container_width=False, theme=None)
 
 
 def gauge_animated_figure(score, score_threshold, frame_duration=0.1):
@@ -373,7 +383,10 @@ def main():
         if client_id == clist[0]:
             st.write('_Veuillez sélectionner un des clients dans le menu de la barre latérale_')
         else:
-            Xgroup = Xtrain.join(Xtrain_addinfo)
+            # Concatenate clients from train and test dataset
+            Xgroup1 = Xtrain.join(Xtrain_addinfo)
+            Xgroup2 = Xtest.join(Xtest_addinfo)
+            Xgroup = pd.concat([Xgroup1, Xgroup2])
             Xgroup['Score'] = np.round((1 - Xgroup['model_predict_proba']) * 100, 0)
 
             # Visualisation options
@@ -429,11 +442,10 @@ def main():
             st.write('')
             st.subheader('Graphique par paire de variables')
             st.write('''Vous pouvez ici visualiser la valeur des clients du groupe, sur deux variables au choix
-             simultanément.  
-                     La couleur correspond au score prédit pour chaque client du groupe.  
+                     simultanément.  
+                     La couleur correspond au score prédit pour les clients du groupe.  
                      La position du client d'intérêt est affichée par un point jaune.''')
             show_client_data_bivariate(data_sample, Xgroup, varlist)
-
 
     # ======= Show client score prediction by API call  ======= #
     with tab2:
