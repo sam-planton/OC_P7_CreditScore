@@ -40,6 +40,8 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         run: |
+          ls
+          
           # Kill processes using the need ports
           fuser -k 5000/tcp
           fuser -k 8000/tcp
@@ -47,6 +49,9 @@ jobs:
           
           # Start the MLflow tracking server in a screen session
           screen -S mlflowtrack -dm mlflow server --host 0.0.0.0 --port 5000
+          
+          # Wait for 10 seconds before continuing
+          sleep 10
 
     - name: Lauch the API on the server
       uses: appleboy/ssh-action@master
@@ -56,11 +61,16 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         port: ${{ secrets.SERVER_SSH_PORT }}
         script: |
+          ls
+          
           # Download the api.py file
           curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 
           # Start the API in a screen session
           screen -S api -dm python3 api.py
+          
+          # Wait for 10 seconds before continuing
+          sleep 10
 
     - name: Run API unittest
       env:
