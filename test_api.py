@@ -3,7 +3,6 @@ import pandas as pd
 import os
 
 API_URL = os.environ.get("API_URL")
-# API_URL = 'http://13.37.31.96:8000/predict'
 
 def test_api_prediction():
 
