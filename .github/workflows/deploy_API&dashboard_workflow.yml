@@ -44,12 +44,12 @@ jobs:
           echo "Hello, World!"
           
           # Kill processes using the need ports
-          fuser -k 5000/tcp
-          fuser -k 8000/tcp
-          # pkill -f api.py
+          sudo fuser -k 5000/tcp
+          sudo fuser -k 8000/tcp
+          sudo pkill -f api.py
           
           # Start the MLflow tracking server in a screen session
-          screen -S mlflowtrack -dm mlflow server --host 0.0.0.0 --port 5000
+          sudo screen -S mlflowtrack -dm mlflow server --host 0.0.0.0 --port 5000
           
           # Wait for 10 seconds before continuing
           sleep 30
@@ -67,10 +67,10 @@ jobs:
           ls
           
           # Download the api.py file
-          curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
+          sudo curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 
           # Start the API in a screen session
-          screen -S api -dm python3 api.py
+          sudo screen -S api -dm python3 api.py
           
           # Wait for 10 seconds before continuing
           sleep 10
