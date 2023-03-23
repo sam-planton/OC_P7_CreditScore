@@ -44,8 +44,8 @@ jobs:
           echo "Hello, World!"
           
           # Kill processes using the need ports
-          # fuser -k 5000/tcp
-          # fuser -k 8000/tcp
+          fuser -k 5000/tcp
+          fuser -k 8000/tcp
           
           # Start the MLflow tracking server in a screen session with a terminal
           screen -S mlflowserv -dm bash -c 'mlflow server --host 0.0.0.0 --port 5000 > /logfile.log 2>&1'
