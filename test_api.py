@@ -28,3 +28,4 @@ def test_api_prediction():
     assert isinstance(prediction, float)
 
 # test_api_prediction()  # to be able to test it with Python, not only Pytest
+

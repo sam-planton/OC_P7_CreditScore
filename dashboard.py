@@ -509,6 +509,7 @@ def main():
             st.write(
                 '_Veuillez sélectionner un des clients dans le menu de la barre latérale_')
         else:
+            score = 50
             if score == 0:
                 st.write('_Veuillez calculer le score du client_')
             else:
@@ -536,22 +537,26 @@ def main():
                         'Les variables suivantes font diminuer le score de ce client 👎📉 (augmenter la probabilité de non-remboursement) :')
                     shap_posit_df = shap_sample_df.sort_values(by='SHAP', ascending=False)[:10]
                     st.write(shap_posit_df[['Row_name', 'SHAP', 'Description']])  # nicer but shows index...
+                # Colors
+                negative_color = "#228B22"  # green
+                positive_color = "#e50000"  # red
 
                 # Force plot
                 st.subheader('Force plot')
                 st.write(
-                    'Les variables en bleu font baisser la probabilité de défaut (augmenter le score), '
+                    'Les variables en vert font baisser la probabilité de défaut (augmenter le score), '
                     'les variables en rouge la font augmenter (diminuer le score). '
                     'La taille de chaque barre est proportionnelle à l''impact de la variable sur le score.')
                 # fig, ax = plt.subplots(facecolor='None')
+
                 fig = shap.force_plot(explainer.expected_value, shap_values_client,
-                                      data_sample)
+                                      data_sample, plot_cmap=[positive_color, negative_color])
                 st_shap(fig, width=1200)  # Display the plot in the Streamlit app
 
                 # Waterfall_plot
                 st.subheader('Waterfall plot')
                 st.write(
-                    'Les variables en bleu font baisser la probabilité de défaut (augmenter le score), '
+                    'Les variables en vert font baisser la probabilité de défaut (augmenter le score), '
                     'les variables en rouge la font augmenter (diminuer le score). '
                     'La taille de chaque barre est proportionnelle à l''impact de la variable sur le score.')
                 fig, ax = plt.subplots(facecolor='None')
@@ -559,11 +564,27 @@ def main():
                 shap.waterfall_plot(shap.Explanation(values=shap_values_client[0],
                                                      base_values=explainer.expected_value,
                                                      data=data_sample.iloc[0]),
-                                    max_display=15)
+                                    max_display=15, show=False)
+                # Change the colormap of the artists
+                # Default SHAP colors
+                default_pos_color = "#ff0051"
+                default_neg_color = "#008bfb"
+                for fc in plt.gcf().get_children():
+                    for fcc in fc.get_children():
+                        if (isinstance(fcc, matplotlib.patches.FancyArrow)):
+                            if (matplotlib.colors.to_hex(fcc.get_facecolor()) == default_pos_color):
+                                fcc.set_facecolor(positive_color)
+                            elif (matplotlib.colors.to_hex(fcc.get_facecolor()) == default_neg_color):
+                                fcc.set_color(negative_color)
+                        elif (isinstance(fcc, plt.Text)):
+                            if (matplotlib.colors.to_hex(fcc.get_color()) == default_pos_color):
+                                fcc.set_color(positive_color)
+                            elif (matplotlib.colors.to_hex(fcc.get_color()) == default_neg_color):
+                                fcc.set_color(negative_color)
                 plt.setp(ax.get_xticklabels(), color="white")
                 plt.setp(ax.get_yticklabels(), color="white")
-                # for spine in ax.spines.values():
-                #     spine.set_color('white')
+                for spine in ax.spines.values():
+                    spine.set_color('white')
                 st_shap(fig, height=700, width=1000)
 
     # ======= Show model info  ======= #
@@ -592,11 +613,11 @@ def main():
         fig, ax = plt.subplots(facecolor='None')
         shap.summary_plot(shap_values, features=Xtrain[:N_shap_samples],
                           plot_type="bar", max_display=15,
-                          color='forestgreen')
+                          color='forestgreen', axis_color='w')
         # Set colors to white
         ax.set_facecolor("None")
-        plt.setp(ax.get_xticklabels(), color="white", fontsize=10)
-        plt.setp(ax.get_yticklabels(), color="white", fontsize=10)
+        # plt.setp(ax.get_xticklabels(), color="white", fontsize=10)
+        # plt.setp(ax.get_yticklabels(), color="white", fontsize=10)
         for spine in ax.spines.values():
             spine.set_color('white')
         st_shap(fig, height=600, width=1000)
@@ -609,7 +630,7 @@ def main():
 
         fig, ax = plt.subplots(facecolor='None')
         shap.summary_plot(shap_values, features=Xtrain[:N_shap_samples],
-                          plot_type='violin', max_display=15)
+                          plot_type='dot', max_display=15, cmap="RdYlGn", alpha=1, axis_color='w', show=False)
         # Set colors to white
         ax.set_facecolor("None")
         plt.setp(ax.get_xticklabels(), color="white", fontsize=10)
