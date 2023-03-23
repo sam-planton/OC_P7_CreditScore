@@ -68,7 +68,7 @@ jobs:
           sudo curl -LO https://raw.githubusercontent.com/sam-planton/OC_P7_CreditScore/main/api.py
 
           # Start the API using nohup to prevent it from terminating
-          nohup screen -S python3 -dm bash -c 'python3 api.py' > api.log 2>&1 &
+          nohup screen -S python3 -dm bash -c 'python3 api.py' &
           
           # Wait for 10 seconds before continuing
           sleep 10
