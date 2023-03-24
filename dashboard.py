@@ -219,7 +219,8 @@ def show_client_data_bivariate(data_client, data_group, varlist):
         var3 = 'Score'
         if grphtype == 'Scatterplot':
             # With sccaterplot
-            fig = px.scatter(data_group, x=var1, y=var2, color=var3, hover_data=[var3], color_continuous_scale='RdYlGn')
+            # fig = px.scatter(data_group, x=var1, y=var2, color=var3, hover_data=[var3], color_continuous_scale='RdYlGn')
+            fig = px.strip(data_group, x=var1, y=var2, color=var3)
         elif grphtype == 'Heatmap':
             # With heatmap
             fig = px.density_contour(data_group, x=var1, y=var2, z=var3, histfunc="avg")
@@ -594,10 +595,9 @@ def main():
 
         # Metrics
         st.subheader('Métriques')
-        cols = st.columns(10)
+        cols = st.columns(6)
         with cols[0]:
-            st.metric('Score métier',
-                      np.round(metrics['cv_test_custom_score'], 3))
+            st.metric('Score métier', np.round(metrics['cv_test_custom_score'], 3))
         with cols[1]:
             st.metric('ROC AUC', np.round(metrics['cv_test_roc_auc'], 3))
         with cols[2]:

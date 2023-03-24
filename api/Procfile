@@ -1,0 +1,1 @@
+web: gunicorn -b 13.37.31.96:8000 api:app
