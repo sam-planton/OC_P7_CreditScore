@@ -10,3 +10,4 @@ streamlit_shap
 imblearn
 pytest
 gunicorn
+flask
