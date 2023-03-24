@@ -470,6 +470,7 @@ def main():
                 # === Get prediction and score
                 if remote_app:
                     # using API on the server
+                    st.write('Model API: ' + API_endpoint)
                     response = requests.post(API_endpoint, json=data_sample.to_dict())
                     pred = response.json()[0]
                 else:
@@ -510,7 +511,6 @@ def main():
             st.write(
                 '_Veuillez sélectionner un des clients dans le menu de la barre latérale_')
         else:
-            score = 50
             if score == 0:
                 st.write('_Veuillez calculer le score du client_')
             else:
