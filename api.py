@@ -18,7 +18,7 @@ import joblib
 # print(model_uri)
 
 # Import the model
-model = joblib.load('data/model.pkl')
+model = mlflow.sklearn.load_model('data/model')
 
 # Initialize Flask app
 app = Flask(__name__)

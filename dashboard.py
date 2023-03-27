@@ -13,7 +13,7 @@ import plotly.figure_factory as ff
 import requests
 import plotly.graph_objects as go
 import time
-
+import os.path as op
 
 @st.cache_data
 def fetch_data_old(artifacts_uri):
@@ -80,9 +80,10 @@ def fetch_data():
 
 @st.cache_resource
 def fetch_model(artifacts_uri):
-    # Load the saved model from MLflow
-    model_uri = f"{artifacts_uri}/model"
-    model = mlflow.sklearn.load_model(model_uri)
+    # # Load the saved model from MLflow
+    # model_uri = f"{artifacts_uri}/model"
+    # model = mlflow.sklearn.load_model(model_uri)
+    model = mlflow.sklearn.load_model('data/model')
 
     return model
 
@@ -339,7 +340,7 @@ def main():
     # Get the cloud data location for the run of interest (that contains data & model)
     if remote_app:
         # MLflow tracking server, containing data & models
-        mlflow.set_tracking_uri("http://13.37.31.96:5000")
+        # mlflow.set_tracking_uri("http://13.37.31.96:5000")
         # Flask API endpoint to return model prediction
         # API_endpoint = "http://13.37.31.96:8000/predict"
         API_endpoint = "https://sp-oc-p7-api.herokuapp.com/predict"
@@ -349,13 +350,14 @@ def main():
         mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
     # Get run ID, artifacts_uri using experiment & run names
-    client = mlflow.tracking.MlflowClient()
-    experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
-    runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
-    run_id = runs[runs['tags.mlflow.runName'] == 'LogisticRegression_'].run_id.values[0]
-    run = client.get_run(run_id)
-    artifacts_uri = run.info.artifact_uri
-    metrics = run.data.metrics
+    # client = mlflow.tracking.MlflowClient()
+    # experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
+    # runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
+    # run_id = runs[runs['tags.mlflow.runName'] == 'LogisticRegression_'].run_id.values[0]
+    # run = client.get_run(run_id)
+    # artifacts_uri = run.info.artifact_uri
+    # metrics = run.data.metrics
+    metrics = pd.read_csv(op.join('data', 'run_info.csv'))
 
     # =========================== FETCH DATA & MODEL =========================== #
     Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df = fetch_data(artifacts_uri)
@@ -496,7 +498,7 @@ def main():
                 st.write('     \n')
                 predict_btn = st.button('Calcul du score', type='primary')
 
-                threshold = metrics['cv_test_best_threshold']
+                threshold = metrics['metrics.cv_test_best_threshold'][0]
                 score_threshold = (1 - threshold) * 100
                 txt = ('Seuil de décision  \n  (score minimal, recommandé = %d) :' % score_threshold)
                 score_threshold = st.slider(txt, min_value=0, max_value=100, value=int(score_threshold), step=1,
@@ -634,13 +636,13 @@ def main():
         st.subheader('Métriques')
         cols = st.columns(6)
         with cols[0]:
-            st.metric('Score métier', np.round(metrics['cv_test_custom_score'], 3))
+            st.metric('Score métier', np.round(metrics['metrics.cv_test_custom_score'][0], 3))
         with cols[1]:
-            st.metric('ROC AUC', np.round(metrics['cv_test_roc_auc'], 3))
+            st.metric('ROC AUC', np.round(metrics['metrics.cv_test_roc_auc'][0], 3))
         with cols[2]:
-            st.metric('F1 score', np.round(metrics['cv_test_f1'], 3))
+            st.metric('F1 score', np.round(metrics['metrics.cv_test_f1'][0], 3))
         with cols[3]:
-            st.metric('Accuracy', np.round(metrics['cv_test_accuracy'], 3))
+            st.metric('Accuracy', np.round(metrics['metrics.cv_test_accuracy'][0], 3))
 
         # Summary plots
         matplotlib.rcParams['text.color'] = 'white'
