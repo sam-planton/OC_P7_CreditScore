@@ -15,14 +15,49 @@ import plotly.graph_objects as go
 import time
 import os.path as op
 
+@st.cache_data
+def fetch_data_old(artifacts_uri):
+    # To lighten the load in memory, set columns to float32 directly when loading
+    # (load a sample of the dataset to identify columns)
+
+    nrows_train = 10000
+    nrows_test = 100
+
+    # Load the training data
+    art_uri = f"{artifacts_uri}/Xtrain.csv"
+    filename = mlflow.artifacts.download_artifacts(art_uri)
+    sample_df = pd.read_csv(filename, nrows=50, index_col='SK_ID_CURR')
+    float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
+    float32_cols = {c: np.float32 for c in float_cols}
+    Xtrain = pd.read_csv(filename, engine='c', dtype=float32_cols, nrows=nrows_train, index_col='SK_ID_CURR')
+    # Xtrain = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), index_col='SK_ID_CURR')
+    art_uri = f"{artifacts_uri}/Xtrain_addinfo.csv"
+    Xtrain_addinfo = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), nrows=nrows_train, index_col='SK_ID_CURR')
+
+    # Load the testing data (sample clients)
+    art_uri = f"{artifacts_uri}/Xtest.csv"
+    filename = mlflow.artifacts.download_artifacts(art_uri)
+    sample_df = pd.read_csv(filename, nrows=50, index_col='SK_ID_CURR')
+    float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
+    float32_cols = {c: np.float32 for c in float_cols}
+    Xtest = pd.read_csv(filename, engine='c', dtype=float32_cols, nrows=nrows_test, index_col='SK_ID_CURR')
+    # Xtest = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), index_col='SK_ID_CURR')
+    art_uri = f"{artifacts_uri}/Xtest_addinfo.csv"
+    Xtest_addinfo = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), nrows=nrows_test, index_col='SK_ID_CURR')
+
+    # Load features description
+    art_uri = f"{artifacts_uri}/description_df.csv"
+    description_df = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri))
+
+    return Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df
 
 @st.cache_data
 def fetch_data():
     # To lighten the load in memory, set columns to float32 directly when loading
     # (load a sample of the dataset to identify columns)
 
-    nrows_train = 19950
-    nrows_test = 50
+    nrows_train = 10000
+    nrows_test = 100
 
     # Load the training data
     sample_df = pd.read_csv('data/Xtrain.csv', nrows=50, index_col='SK_ID_CURR')
@@ -32,10 +67,10 @@ def fetch_data():
     Xtrain_addinfo = pd.read_csv('data/Xtrain_addinfo.csv', nrows=nrows_train, index_col='SK_ID_CURR')
 
     # Load the testing data (sample clients)
-    sample_df = pd.read_csv('data/Xtest.csv', nrows=50, index_col='SK_ID_CURR')
+    sample_df = pd.read_csv('data/Xest.csv', nrows=50, index_col='SK_ID_CURR')
     float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
     float32_cols = {c: np.float32 for c in float_cols}
-    Xtest = pd.read_csv('data/Xtest.csv', engine='c', dtype=float32_cols, nrows=nrows_test, index_col='SK_ID_CURR')
+    Xtest = pd.read_csv('data/Xtest.csv', engine='c', dtype=float32_cols, nrows=nrows_train, index_col='SK_ID_CURR')
     Xtest_addinfo = pd.read_csv('data/Xtest_addinfo.csv', nrows=nrows_train, index_col='SK_ID_CURR')
 
     # Load features description
@@ -43,10 +78,11 @@ def fetch_data():
 
     return Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df
 
-
 @st.cache_resource
-def fetch_model():
-    # Load the model saved with MLflow
+def fetch_model(artifacts_uri):
+    # # Load the saved model from MLflow
+    # model_uri = f"{artifacts_uri}/model"
+    # model = mlflow.sklearn.load_model(model_uri)
     model = mlflow.sklearn.load_model('data/model')
 
     return model
@@ -62,7 +98,7 @@ def compute_shap(_model, Xtrain, N_shap_samples):
     def predict_fn(x): return _model.predict_proba(x)[:, 1]
 
     explainer = shap.KernelExplainer(predict_fn, shap.kmeans(Xtrain, 20))
-    shap_values = explainer.shap_values(Xtrain.sample(Nsamples), gc_collect=True)
+    shap_values = explainer.shap_values(Xtrain.sample(Nsamples))
 
     return explainer, shap_values
 
@@ -105,7 +141,7 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
 
     data_group.loc[data_group['model_predict_class'] == 0.0, 'CreditStatus'] = 'Crédit accordé'
     data_group.loc[data_group['model_predict_class'] == 1.0, 'CreditStatus'] = 'Crédit refusé'
-    cols = st.columns(2)
+    cols = st.columns(3)
     for i in range(len(cols)):
         with cols[i]:
             options = ['<Sélectionnez une variable>'] + varlist
@@ -209,31 +245,30 @@ def show_client_data_bivariate(data_client, data_group, varlist):
         grphtype = st.radio("Type de graphique :", ("Heatmap", "Scatterplot"))
     if (var1 != options[0]) & (var2 != options[0]):
         var3 = 'Score'
-        # We add jitter for binary (categorical) variables
-        jitter_amount = 0.06  # adjust the amount of jitter as needed
-        data_group_jittered = data_group[:500].copy()  # make a copy of the data
-        if len(np.unique(data_group[var1])) == 2:
-            data_group_jittered[var1] += np.random.normal(0, jitter_amount, len(data_group_jittered))
-        if len(np.unique(data_group[var2])) == 2:
-            data_group_jittered[var2] += np.random.normal(0, jitter_amount, len(data_group_jittered))
-        data_group_jittered = data_group_jittered.round(2)
         if grphtype == 'Scatterplot':
             # With sccaterplot
-            fig = px.scatter(data_group_jittered, x=var1, y=var2, color=var3, color_continuous_scale='RdYlGn')
+            # We add jitter for binary (categorical) variables
+            jitter_amount = 0.06  # adjust the amount of jitter as needed
+            data_group_jittered = data_group[:500].copy()  # make a copy of the data
+            if len(np.unique(data_group[var1])) == 2:
+                data_group_jittered[var1] += np.random.normal(0, jitter_amount, len(data_group_jittered))
+                print('var1 is binary')
+            if len(np.unique(data_group[var2])) == 2:
+                data_group_jittered[var2] += np.random.normal(0, jitter_amount, len(data_group_jittered))
+                print('var2 is binary')
+            fig = px.scatter(data_group, x=var1, y=var2, color=var3, color_continuous_scale='RdYlGn')
         elif grphtype == 'Heatmap':
             # With heatmap
-            fig = px.density_contour(data_group_jittered, x=var1, y=var2, z=var3, histfunc="avg")
+            fig = px.density_contour(data_group, x=var1, y=var2, z=var3, histfunc="avg")
             fig.update_traces(contours_coloring="fill", contours_showlabels=False, colorscale='RdYlGn')
             fig.update_traces(colorbar_title='Score Moyen', selector=dict(type='histogram2dcontour'))
             # fig = px.density_heatmap(data_group, x=var1, y=var2, z=var3, histfunc="avg",
             #                          color_continuous_scale='RdYlGn', nbinsx=100, nbinsy=100)
         # Add client dot
         fig.add_scatter(x=[data_client[var1].values[0]], y=[data_client[var2].values[0]], mode='markers', name='Client',
-                        marker=dict(size=18, color='yellow', line=dict(width=2, color='black')))
-        # Move the legend for the yellow dot above the colorbar
-        fig.update_layout(legend=dict(yanchor="top", y=1.08, xanchor="left", x=0.01))
+                        marker=dict(size=20, color='yellow', line=dict(width=2, color='black')))
         # Layout
-        fig.update_coloraxes(colorbar_title_side='right')
+        # fig.update_coloraxes(colorbar_title_side='right')
         fig.update_layout(height=600, width=600)
         st.plotly_chart(fig, use_container_width=False, theme=None)
 
@@ -297,27 +332,39 @@ def gauge_animated_figure(score, score_threshold, frame_duration=0.1):
 def main():
     # ================================= SETUP ================================= #
     # Streamlit page config
-    st.set_page_config(page_title="Credit Score", page_icon="🏦", layout="wide")
+    st.set_page_config(page_title="Credit Score", page_icon=":sunglasses:", layout="wide")
 
     # Run the app using local data/model or using server-based data/model/API
     remote_app = True
 
     # Get the cloud data location for the run of interest (that contains data & model)
     if remote_app:
+        # MLflow tracking server, containing data & models
+        # mlflow.set_tracking_uri("http://13.37.31.96:5000")
         # Flask API endpoint to return model prediction
+        # API_endpoint = "http://13.37.31.96:8000/predict"
         API_endpoint = "https://sp-oc-p7-api.herokuapp.com/predict"
 
     else:
         # MLflow tracking server, containing data & models
         mlflow.set_tracking_uri("http://127.0.0.1:5000")
 
-    # =========================== FETCH DATA & MODEL =========================== #
-    Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df = fetch_data()
-    model = fetch_model()
+    # Get run ID, artifacts_uri using experiment & run names
+    # client = mlflow.tracking.MlflowClient()
+    # experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
+    # runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
+    # run_id = runs[runs['tags.mlflow.runName'] == 'LogisticRegression_'].run_id.values[0]
+    # run = client.get_run(run_id)
+    # artifacts_uri = run.info.artifact_uri
+    # metrics = run.data.metrics
     metrics = pd.read_csv(op.join('data', 'run_info.csv'))
 
+    # =========================== FETCH DATA & MODEL =========================== #
+    Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df = fetch_data(artifacts_uri)
+    model = fetch_model(artifacts_uri)
+
     # Compute feature importances based on the SHAP values
-    N_shap_samples = 500
+    N_shap_samples = 100
     explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
     feature_importances_df = pd.DataFrame(np.mean(np.abs(shap_values), axis=0), index=Xtrain.columns, columns=['SHAP'])
 
@@ -333,33 +380,10 @@ def main():
     st.markdown("""
                 Cette application permet d'attribuer un **"score crédit"**
                  à un client basé sur la probabilité de défaut du client,
-                déterminée à partir d'un modèle de machine learning.  
+                déterminée à partir d''un modèle de machine learning.  
                 Les données utilisées proviennent du jeu de données Kaggle
                 [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk/overview)
-                
-                Code et données accessibles sur [GitHub](https://github.com/sam-planton/OC_P7_CreditScore)                
-                """, unsafe_allow_html=True)
 
-    with st.expander("Cliquez ici pour développer les instructions"):
-        st.write("""
-                Pour commencer, veuillez choisir un des clients dans le menu de la barre latérale.  
-                
-                Veuillez ensuite sélectionner un des quatre onglets ci-dessous.
-                - **🗠 Visualiser les données du client**: Cet onglet vous permet de visualiser les données du 
-                groupe de clients enregistrés dans la base de données, tout en y situant le client d'intérêt,
-                sur une ou plusieurs variables ou choix (plusieurs centaines disponibles).  
-                
-                - **💯 Calculer le score crédit du client**: Cet onglet utilise le modèle de machine learning 
-                entraîné, mis à disposition sous la forme d'une API, pour prédire le score du client sélectionné.
-                Le score varie de 0 à 100. Un score de 0 indique une probabilité de défaut du client maximale.    
-                
-                - **📊 Explications du score**: Les informations fournies sous cet onglet permettent de mieux 
-                comprendre le score prédit par le modèle pour le client sélectionné : quelles sont les variables
-                qui font augmenter ou diminuer son score et en quelles proportions.
-                
-                - **⚙️Informations sur le modèle**: Cet onglet fournit des informations sur les performances
-                du modèle statistique de prédiction, ainsi que sur les variables les plus importantes pour la 
-                détermination du *score crédit*. 
                 """)
 
     tab1, tab2, tab3, tab4 = st.tabs(['🗠 Visualiser les données du client',
@@ -394,8 +418,8 @@ def main():
     # ======= Show client data ======= #
     with tab1:
         st.header('🗠 Visualiser les données du client')
-        # st.write(''' Cet onglet vous permet de visualiser les données du groupe de clients enregistrés dans la base de
-        # données, tout en y situant le client d'intérêt.''')
+        st.write(''' Cet onglet vous permet de visualiser les données du groupe de clients enregistrés dans la base de 
+        données, tout en y situant le client d'intérêt.''')
         if client_id == clist[0]:
             st.write('_Veuillez sélectionner un des clients dans le menu de la barre latérale_')
         else:
@@ -410,7 +434,7 @@ def main():
             st.write('')
             st.subheader('Paramètres')
             col1, col2, col3 = st.columns([1, 1, 1])
-            with col2:
+            with col1:
                 options = ['Tous les clients',
                            'Même catégorie socio-démographique',
                            'Même groupe - proche sur toutes variables']
@@ -427,7 +451,7 @@ def main():
                     mask = Xgroup['cluster_FullData'] == data_sample_addinfo['cluster_FullData'].values[0]
                     Xgroup = Xgroup[mask]
                 st.write('%d clients sélectionnés dans la base de données' % len(Xgroup))
-            with col3:
+            with col2:
                 helptxt = 'Toutes, ou limiter aux 15 plus importantes selon le modèle'
                 genre = st.radio("Quelles variables rechercher ?",
                                  ('Toutes', 'Uniquement les plus importantes pour le score'), help=helptxt)
@@ -436,9 +460,9 @@ def main():
                 elif genre == 'Uniquement les plus importantes pour le score':
                     feature_importances_df = feature_importances_df.sort_values(by='SHAP', ascending=False)
                     varlist = sorted(feature_importances_df[:15].index)
-            with col1:
+            with col3:
                 helptxt = 'Séparer ou non les données du groupe selon la prediction du modèle: crédit accepté ou refusé.'
-                subgrp = st.radio("Sous-groupes selon la prédiction",
+                subgrp = st.radio("Sous-groupes ?",
                                   ('Regrouper tous les clients', 'Séparer selon la prédiction du modèle'), help=helptxt)
                 if subgrp == 'Regrouper tous les clients':
                     do_subgrp = False
@@ -497,14 +521,14 @@ def main():
                 with col1:
 
                     # === Gauge figure with progress animation
-                    gauge_animated_figure(score, score_threshold, frame_duration=0.05)
+                    gauge_animated_figure(score, score_threshold, frame_duration=0.1)
 
                     # === st.metric
                     with col2:
                         subcol1, subcol2 = st.columns([0.5, 1])
                         with subcol1:
                             st.metric('Score crédit:', value=('%d/100' % score))
-                            st.write('Probabilité de ne pas rembourser : %.01f%%' % (pred * 100))
+                            st.write('Probabilité de ne pas rembourser: %.01f%%' % (pred * 100))
                             st.sidebar.metric('Score :', value=('%d/100' % score))
 
                         # === Message
@@ -567,9 +591,7 @@ def main():
 
                 fig = shap.force_plot(explainer.expected_value, shap_values_client,
                                       data_sample, plot_cmap=[positive_color, negative_color])
-                with st.container():
-                    st_shap(fig)  # Display the plot in the Streamlit app
-                # st_shap(fig, width=1200)  # Display the plot in the Streamlit app
+                st_shap(fig, width=1200)  # Display the plot in the Streamlit app
 
                 # Waterfall_plot
                 st.subheader('Waterfall plot')
@@ -603,18 +625,12 @@ def main():
                 plt.setp(ax.get_yticklabels(), color="white")
                 for spine in ax.spines.values():
                     spine.set_color('white')
-                with st.container():
-                    st_shap(fig, height=700)
-                # st_shap(fig, height=700, width=1000)
+                st_shap(fig, height=700, width=1000)
 
     # ======= Show model info  ======= #
     with tab4:
-        st.header('⚙️Informations sur le modèle')
-        # Get the width of the Streamlit page
-        page_width = st.config.get_option("server.maxUploadSize")
-
-        # Print the width
-        st.write(f"The width of the Streamlit page is {page_width}px.")
+        st.header('⚙️ Informations sur le modèle')
+        st.write('Nom du run : ' + run.info.run_name)
 
         # Metrics
         st.subheader('Métriques')
@@ -643,9 +659,8 @@ def main():
         # plt.setp(ax.get_yticklabels(), color="white", fontsize=10)
         for spine in ax.spines.values():
             spine.set_color('white')
-        with st.container():
-            st_shap(fig)
-        # st_shap(fig, height=600, width=1000)
+        st_shap(fig, height=600, width=1000)
+        # with col2:
         st.subheader('Distribution de la contribution des features')
         st.write('''Les couleurs chaudes désignent une valeur élevée sur la feature, les couleurs froides une valeur basse.  
         Par exemple, les points rouges avec une valeur SHAP positive (à droite) désignent des clients pour qui une augmentation de la valeur
@@ -661,9 +676,7 @@ def main():
         plt.setp(ax.get_yticklabels(), color="white", fontsize=10)
         for spine in ax.spines.values():
             spine.set_color('white')
-        with st.container():
-            st_shap(fig, height=600)
-        # st_shap(fig, height=600, width=1000)
+        st_shap(fig, height=600, width=1000)
 
     st.markdown("---")
 
