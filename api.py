@@ -17,17 +17,16 @@ import joblib
 # model = mlflow.sklearn.load_model(model_uri)
 # print(model_uri)
 
-
+# Import the model
+model = joblib.load('/data/model.pkl')
 
 # Initialize Flask app
 app = Flask(__name__)
 
-
 # Define a route for making predictions
 @app.route("/predict", methods=["POST"])
 def predict():
-    # Import the model
-    model = joblib.load('/data/model.pkl')
+
 
     # Get the input data from the request body
     data = request.json
