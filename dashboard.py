@@ -16,7 +16,7 @@ import time
 
 
 @st.cache_data
-def fetch_data(artifacts_uri):
+def fetch_data_old(artifacts_uri):
     # To lighten the load in memory, set columns to float32 directly when loading
     # (load a sample of the dataset to identify columns)
 
@@ -51,6 +51,32 @@ def fetch_data(artifacts_uri):
 
     return Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df
 
+@st.cache_data
+def fetch_data():
+    # To lighten the load in memory, set columns to float32 directly when loading
+    # (load a sample of the dataset to identify columns)
+
+    nrows_train = 10000
+    nrows_test = 100
+
+    # Load the training data
+    sample_df = pd.read_csv('data/Xtrain.csv', nrows=50, index_col='SK_ID_CURR')
+    float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
+    float32_cols = {c: np.float32 for c in float_cols}
+    Xtrain = pd.read_csv('data/Xtrain.csv', engine='c', dtype=float32_cols, nrows=nrows_train, index_col='SK_ID_CURR')
+    Xtrain_addinfo = pd.read_csv('data/Xtrain_addinfo.csv', nrows=nrows_train, index_col='SK_ID_CURR')
+
+    # Load the testing data (sample clients)
+    sample_df = pd.read_csv('data/Xest.csv', nrows=50, index_col='SK_ID_CURR')
+    float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
+    float32_cols = {c: np.float32 for c in float_cols}
+    Xtest = pd.read_csv('data/Xtest.csv', engine='c', dtype=float32_cols, nrows=nrows_train, index_col='SK_ID_CURR')
+    Xtest_addinfo = pd.read_csv('data/Xtest_addinfo.csv', nrows=nrows_train, index_col='SK_ID_CURR')
+
+    # Load features description
+    description_df = pd.read_csv('data/description_df.csv')
+
+    return Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df
 
 @st.cache_resource
 def fetch_model(artifacts_uri):

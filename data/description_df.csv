@@ -1,0 +1,288 @@
+,Row_name,Row_name_clean,Table,Row,Description,Special,New_Row
+0,CLOSED_DAYS_CREDIT_ENDDATE_MIN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+1,CC_CNT_DRAWINGS_CURRENT_MEAN,CC_CNT_DRAWINGS_CURRENT,,,,,
+2,PREV_RATE_DOWN_PAYMENT_MIN,PREV_RATE_DOWN_PAYMENT,previous_application.csv,RATE_DOWN_PAYMENT,Down payment rate normalized on previous credit,normalized,PREV_RATE_DOWN_PAYMENT
+3,BURO_DAYS_CREDIT_MEAN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+4,BURO_MONTHS_BALANCE_MIN_MIN,BURO_MONTHS_BALANCE,,,,,
+5,PREV_HOUR_APPR_PROCESS_START_MAX,PREV_HOUR_APPR_PROCESS_START,previous_application.csv,HOUR_APPR_PROCESS_START,Approximately at what day hour did the client apply for the previous application,rounded,PREV_HOUR_APPR_PROCESS_START
+6,REFUSED_AMT_CREDIT_MIN,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+7,NAME_FAMILY_STATUS_Separated,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+8,NAME_FAMILY_STATUS_Civil marriage,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+9,EXT_SOURCE_1,EXT_SOURCE_1,application_{train|test}.csv,EXT_SOURCE_1,Normalized score from external data source,normalized,EXT_SOURCE_1
+10,DAYS_EMPLOYED,DAYS_EMPLOYED,application_{train|test}.csv,DAYS_EMPLOYED,How many days before the application the person started current employment,time only relative to the application,DAYS_EMPLOYED
+11,PREV_WEEKDAY_APPR_PROCESS_START_THURSDAY_MEAN,WEEKDAY_APPR_PROCESS_START,application_{train|test}.csv,WEEKDAY_APPR_PROCESS_START,On which day of the week did the client apply for the loan,,WEEKDAY_APPR_PROCESS_START
+12,BURO_DAYS_CREDIT_MIN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+13,NONLIVINGAREA_MODE,NONLIVINGAREA_MODE,application_{train|test}.csv,NONLIVINGAREA_MODE,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,NONLIVINGAREA_MODE
+14,OCCUPATION_TYPE_Core staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+15,PREV_CODE_REJECT_REASON_XAP_MEAN,PREV_CODE_REJECT_REASON,previous_application.csv,CODE_REJECT_REASON,Why was the previous application rejected,,PREV_CODE_REJECT_REASON
+16,APPROVED_DAYS_DECISION_MAX,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+17,PREV_APP_CREDIT_PERC_MAX,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+18,OCCUPATION_TYPE_Waiters/barmen staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+19,APPROVED_AMT_ANNUITY_MIN,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+20,AMT_CREDIT,AMT_CREDIT,application_{train|test}.csv,AMT_CREDIT,Credit amount of the loan,,AMT_CREDIT
+21,PREV_NAME_CONTRACT_TYPE_Consumer loans_MEAN,NAME_CONTRACT_TYPE,application_{train|test}.csv,NAME_CONTRACT_TYPE,Identification if loan is cash or revolving,,NAME_CONTRACT_TYPE
+22,FLAG_OWN_CAR,FLAG_OWN_CAR,application_{train|test}.csv,FLAG_OWN_CAR,Flag if the client owns a car,,FLAG_OWN_CAR
+23,BURO_AMT_ANNUITY_MAX,BURO_AMT_ANNUITY,bureau.csv,AMT_ANNUITY,Annuity of the Credit Bureau credit,,BURO_AMT_ANNUITY
+24,BURO_AMT_CREDIT_MAX_OVERDUE_MEAN,BURO_AMT_CREDIT_OVERDUE,,,Amount overdue on the Credit Bureau credit so far (at application date of loan in our sample),,BURO_AMT_CREDIT_OVERDUE
+25,BURO_AMT_CREDIT_SUM_DEBT_MAX,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+26,BURO_AMT_CREDIT_SUM_DEBT_MAX,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+27,APPROVED_CNT_PAYMENT_SUM,PREV_CNT_PAYMENT,previous_application.csv,CNT_PAYMENT,Term of previous credit at application of the previous application,,PREV_CNT_PAYMENT
+28,NAME_EDUCATION_TYPE_Academic degree,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+29,PREV_NAME_GOODS_CATEGORY_Computers_MEAN,PREV_NAME_GOODS_CATEGORY,previous_application.csv,NAME_GOODS_CATEGORY,What kind of goods did the client apply for in the previous application,,PREV_NAME_GOODS_CATEGORY
+30,CLOSED_MONTHS_BALANCE_SIZE_SUM,BURO_MONTHS_BALANCE,,,,,
+31,PREV_CODE_REJECT_REASON_LIMIT_MEAN,PREV_CODE_REJECT_REASON,previous_application.csv,CODE_REJECT_REASON,Why was the previous application rejected,,PREV_CODE_REJECT_REASON
+32,PREV_PRODUCT_COMBINATION_Cash_MEAN,PREV_PRODUCT_COMBINATION_Cash,,,,,
+33,YEARS_BEGINEXPLUATATION_AVG,YEARS_BEGINEXPLUATATION_AVG,application_{train|test}.csv,YEARS_BEGINEXPLUATATION_AVG,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,YEARS_BEGINEXPLUATATION_AVG
+34,INSTAL_PAYMENT_DIFF_SUM,INSTAL_PAYMENT_DIFF,,,What was the prescribed installment amount of previous credit on this installment minus What the client actually paid on previous credit on this installment,,INSTAL_PAYMENT_DIFF
+35,BURO_AMT_CREDIT_SUM_LIMIT_MEAN,BURO_AMT_CREDIT_LIMIT,,,Current credit limit of credit card reported in Credit Bureau,,BURO_AMT_CREDIT_LIMIT
+36,OCCUPATION_TYPE_IT staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+37,ACTIVE_AMT_CREDIT_SUM_LIMIT_SUM,BURO_AMT_CREDIT_LIMIT,,,Current credit limit of credit card reported in Credit Bureau,,BURO_AMT_CREDIT_LIMIT
+38,NAME_EDUCATION_TYPE_Higher education,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+39,INSTAL_DBD_MEAN,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+40,INSTAL_DBD_MEAN,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+41,CLOSED_AMT_CREDIT_SUM_SUM,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+42,POS_SK_DPD_MEAN,POS_SK_DPD,POS_CASH_balance.csv,SK_DPD,DPD (days past due) during the month of previous credit,,POS_SK_DPD
+43,OCCUPATION_TYPE_Managers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+44,ACTIVE_AMT_ANNUITY_MAX,BURO_AMT_ANNUITY,bureau.csv,AMT_ANNUITY,Annuity of the Credit Bureau credit,,BURO_AMT_ANNUITY
+45,PAYMENT_RATE,PAYMENT_RATE,,,Loan annuity relative to Credit amount of the loan,,PAYMENT_RATE
+46,PREV_WEEKDAY_APPR_PROCESS_START_SATURDAY_MEAN,WEEKDAY_APPR_PROCESS_START,application_{train|test}.csv,WEEKDAY_APPR_PROCESS_START,On which day of the week did the client apply for the loan,,WEEKDAY_APPR_PROCESS_START
+47,PREV_DAYS_DECISION_MEAN,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+48,PREV_NAME_CASH_LOAN_PURPOSE_Other_MEAN,PREV_NAME_CASH_LOAN_PURPOSE,previous_application.csv,NAME_CASH_LOAN_PURPOSE,Purpose of the cash loan,,PREV_NAME_CASH_LOAN_PURPOSE
+49,CNT_CHILDREN,CNT_CHILDREN,application_{train|test}.csv,CNT_CHILDREN,Number of children the client has,,CNT_CHILDREN
+50,OCCUPATION_TYPE_Drivers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+51,BURO_MONTHS_BALANCE_SIZE_SUM,BURO_MONTHS_BALANCE,,,,,
+52,BURO_DAYS_CREDIT_ENDDATE_MIN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+53,PREV_AMT_GOODS_PRICE_MEAN,PREV_AMT_GOODS_PRICE,previous_application.csv,AMT_GOODS_PRICE,Goods price of good that client asked for (if applicable) on the previous application,,PREV_AMT_GOODS_PRICE
+54,OCCUPATION_TYPE_Realty agents,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+55,PREV_AMT_GOODS_PRICE_MIN,PREV_AMT_GOODS_PRICE,previous_application.csv,AMT_GOODS_PRICE,Goods price of good that client asked for (if applicable) on the previous application,,PREV_AMT_GOODS_PRICE
+56,OCCUPATION_TYPE_Sales staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+57,PREV_AMT_APPLICATION_MEAN,PREV_AMT_APPLICATION,previous_application.csv,AMT_APPLICATION,For how much credit did client ask on the previous application,,PREV_AMT_APPLICATION
+58,BURO_CREDIT_TYPE_Consumer credit_MEAN,BURO_CREDIT_TYPE,bureau.csv,CREDIT_TYPE,"Type of Credit Bureau credit (Car, cash,...)",,BURO_CREDIT_TYPE
+59,APPROVED_AMT_GOODS_PRICE_MIN,PREV_AMT_GOODS_PRICE,previous_application.csv,AMT_GOODS_PRICE,Goods price of good that client asked for (if applicable) on the previous application,,PREV_AMT_GOODS_PRICE
+60,CC_CNT_DRAWINGS_CURRENT_SUM,CC_CNT_DRAWINGS_CURRENT,,,,,
+61,DEF_30_CNT_SOCIAL_CIRCLE,DEF_30_CNT_SOCIAL_CIRCLE,application_{train|test}.csv,DEF_30_CNT_SOCIAL_CIRCLE,How many observation of client's social surroundings defaulted on 30 DPD (days past due) ,,DEF_30_CNT_SOCIAL_CIRCLE
+62,PREV_CHANNEL_TYPE_AP+ (Cash loan)_MEAN,PREV_CHANNEL_TYPE_AP+ (Cash loan),,,,,
+63,POS_NAME_CONTRACT_STATUS_Active_MEAN,NAME_CONTRACT_STATUS,credit_card_balance.csv,NAME_CONTRACT_STATUS,"Contract status (active signed,...) on the previous credit",,NAME_CONTRACT_STATUS
+64,POS_SK_DPD_DEF_MAX,POS_SK_DPD_DEF,POS_CASH_balance.csv,SK_DPD_DEF,DPD during the month with tolerance (debts with low loan amounts are ignored) of the previous credit,,POS_SK_DPD_DEF
+65,CC_AMT_DRAWINGS_ATM_CURRENT_SUM,CC_AMT_DRAWINGS_ATM_CURRENT,,,,,
+66,APPROVED_APP_CREDIT_PERC_MEAN,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+67,OCCUPATION_TYPE_Laborers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+68,BURO_CREDIT_ACTIVE_Closed_MEAN,BURO_CREDIT_BURO_Closed,,,,,
+69,COMMONAREA_MEDI,COMMONAREA_MEDI,application_{train|test}.csv,COMMONAREA_MEDI,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,COMMONAREA_MEDI
+70,PREV_DAYS_DECISION_MAX,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+71,INCOME_CREDIT_PERC,INCOME_CREDIT_PERC,,,Income of the client relative to Credit amount of the loan,,INCOME_CREDIT_PERC
+72,PREV_WEEKDAY_APPR_PROCESS_START_FRIDAY_MEAN,WEEKDAY_APPR_PROCESS_START,application_{train|test}.csv,WEEKDAY_APPR_PROCESS_START,On which day of the week did the client apply for the loan,,WEEKDAY_APPR_PROCESS_START
+73,DAYS_REGISTRATION,DAYS_REGISTRATION,application_{train|test}.csv,DAYS_REGISTRATION,How many days before the application did client change his registration,time only relative to the application,DAYS_REGISTRATION
+74,DAYS_LAST_PHONE_CHANGE,DAYS_LAST_PHONE_CHANGE,application_{train|test}.csv,DAYS_LAST_PHONE_CHANGE,How many days before application did client change phone,,DAYS_LAST_PHONE_CHANGE
+75,OCCUPATION_TYPE_HR staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+76,ACTIVE_AMT_CREDIT_SUM_DEBT_MEAN,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+77,ACTIVE_AMT_CREDIT_SUM_DEBT_MEAN,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+78,BURO_DAYS_CREDIT_MAX,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+79,INCOME_PER_PERSON,INCOME_PER_PERSON,,,Income of the client relative to number of family members,,INCOME_PER_PERSON
+80,PREV_NAME_CASH_LOAN_PURPOSE_Everyday expenses_MEAN,PREV_NAME_CASH_LOAN_PURPOSE,previous_application.csv,NAME_CASH_LOAN_PURPOSE,Purpose of the cash loan,,PREV_NAME_CASH_LOAN_PURPOSE
+81,BURO_DAYS_CREDIT_VAR,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+82,APPROVED_DAYS_DECISION_MEAN,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+83,POS_NAME_CONTRACT_STATUS_Signed_MEAN,NAME_CONTRACT_STATUS,credit_card_balance.csv,NAME_CONTRACT_STATUS,"Contract status (active signed,...) on the previous credit",,NAME_CONTRACT_STATUS
+84,BURO_STATUS_1_MEAN_MEAN,BURO_STATUS_1,,,,,
+85,PREV_CHANNEL_TYPE_Stone_MEAN,PREV_CHANNEL_TYPE_Stone,,,,,
+86,OCCUPATION_TYPE_Cooking staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+87,INSTAL_DAYS_ENTRY_PAYMENT_MAX,INSTAL_DAYS_ENTRY_PAYMENT,installments_payments.csv,DAYS_ENTRY_PAYMENT,When was the installments of previous credit paid actually (relative to application date of current loan),time only relative to the application,INSTAL_DAYS_ENTRY_PAYMENT
+88,PREV_NAME_CLIENT_TYPE_New_MEAN,PREV_NAME_CLIENT_TYPE,previous_application.csv,NAME_CLIENT_TYPE,Was the client old or new client when applying for the previous application,,PREV_NAME_CLIENT_TYPE
+89,OWN_CAR_AGE,OWN_CAR_AGE,application_{train|test}.csv,OWN_CAR_AGE,Age of client's car,,OWN_CAR_AGE
+90,PREV_AMT_ANNUITY_MEAN,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+91,ORGANIZATION_TYPE_Bank,ORGANIZATION_TYPE,application_{train|test}.csv,ORGANIZATION_TYPE,Type of organization where client works,,ORGANIZATION_TYPE
+92,BURO_AMT_CREDIT_SUM_MEAN,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+93,CLOSED_DAYS_CREDIT_ENDDATE_MAX,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+94,INSTAL_COUNT,INSTAL,,,,,
+95,BURO_AMT_CREDIT_SUM_SUM,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+96,CLOSED_DAYS_CREDIT_UPDATE_MEAN,BURO_DAYS_CREDIT_UPDATE,bureau.csv,DAYS_CREDIT_UPDATE,How many days before loan application did last information about the Credit Bureau credit come,time only relative to the application,BURO_DAYS_CREDIT_UPDATE
+97,POS_MONTHS_BALANCE_MAX,POS_MONTHS_BALANCE,POS_CASH_balance.csv,MONTHS_BALANCE,"Month of balance relative to application date (-1 means the information to the freshest monthly snapshot, 0 means the information at application - often it will be the same as -1 as many banks are not updating the information to Credit Bureau regularly )",time only relative to the application,POS_MONTHS_BALANCE
+98,CLOSED_MONTHS_BALANCE_SIZE_MEAN,BURO_MONTHS_BALANCE,,,,,
+99,PREV_NAME_CASH_LOAN_PURPOSE_XNA_MEAN,PREV_NAME_CASH_LOAN_PURPOSE,previous_application.csv,NAME_CASH_LOAN_PURPOSE,Purpose of the cash loan,,PREV_NAME_CASH_LOAN_PURPOSE
+100,PREV_AMT_ANNUITY_MAX,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+101,HOUR_APPR_PROCESS_START,HOUR_APPR_PROCESS_START,application_{train|test}.csv,HOUR_APPR_PROCESS_START,Approximately at what hour did the client apply for the loan,rounded,HOUR_APPR_PROCESS_START
+102,ACTIVE_MONTHS_BALANCE_SIZE_MEAN,BURO_MONTHS_BALANCE,,,,,
+103,APPROVED_AMT_CREDIT_MAX,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+104,COMMONAREA_AVG,COMMONAREA_AVG,application_{train|test}.csv,COMMONAREA_AVG,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,COMMONAREA_AVG
+105,PREV_AMT_CREDIT_MIN,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+106,PREV_DAYS_DECISION_MIN,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+107,PREV_NAME_CONTRACT_STATUS_Canceled_MEAN,NAME_CONTRACT_STATUS,credit_card_balance.csv,NAME_CONTRACT_STATUS,"Contract status (active signed,...) on the previous credit",,NAME_CONTRACT_STATUS
+108,PREV_WEEKDAY_APPR_PROCESS_START_MONDAY_MEAN,WEEKDAY_APPR_PROCESS_START,application_{train|test}.csv,WEEKDAY_APPR_PROCESS_START,On which day of the week did the client apply for the loan,,WEEKDAY_APPR_PROCESS_START
+109,APPROVED_HOUR_APPR_PROCESS_START_MIN,PREV_HOUR_APPR_PROCESS_START,previous_application.csv,HOUR_APPR_PROCESS_START,Approximately at what day hour did the client apply for the previous application,rounded,PREV_HOUR_APPR_PROCESS_START
+110,BURO_AMT_CREDIT_SUM_DEBT_SUM,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+111,BURO_AMT_CREDIT_SUM_DEBT_SUM,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+112,CLOSED_DAYS_CREDIT_MEAN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+113,PREV_CHANNEL_TYPE_Regional / Local_MEAN,PREV_CHANNEL_TYPE_Regional / Local,,,,,
+114,CLOSED_DAYS_CREDIT_ENDDATE_MEAN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+115,APPROVED_APP_CREDIT_PERC_MAX,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+116,PREV_NAME_PAYMENT_TYPE_XNA_MEAN,PREV_NAME_PAYMENT_TYPE_XNA,,,,,
+117,INSTAL_AMT_INSTALMENT_SUM,INSTAL_AMT_INSTALMENT,installments_payments.csv,AMT_INSTALMENT,What was the prescribed installment amount of previous credit on this installment,,INSTAL_AMT_INSTALMENT
+118,NONLIVINGAPARTMENTS_AVG,NONLIVINGAPARTMENTS_AVG,application_{train|test}.csv,NONLIVINGAPARTMENTS_AVG,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,NONLIVINGAPARTMENTS_AVG
+119,PREV_NAME_CONTRACT_STATUS_Approved_MEAN,NAME_CONTRACT_STATUS,credit_card_balance.csv,NAME_CONTRACT_STATUS,"Contract status (active signed,...) on the previous credit",,NAME_CONTRACT_STATUS
+120,NAME_EDUCATION_TYPE_Lower secondary,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+121,LIVINGAREA_AVG,LIVINGAREA_AVG,application_{train|test}.csv,LIVINGAREA_AVG,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,LIVINGAREA_AVG
+122,PREV_CHANNEL_TYPE_Credit and cash offices_MEAN,PREV_CHANNEL_TYPE_Credit and cash offices,,,,,
+123,PREV_NAME_CONTRACT_TYPE_Revolving loans_MEAN,NAME_CONTRACT_TYPE,application_{train|test}.csv,NAME_CONTRACT_TYPE,Identification if loan is cash or revolving,,NAME_CONTRACT_TYPE
+124,INSTAL_AMT_PAYMENT_MAX,INSTAL_AMT_PAYMENT,installments_payments.csv,AMT_PAYMENT,What the client actually paid on previous credit on this installment,,INSTAL_AMT_PAYMENT
+125,ACTIVE_MONTHS_BALANCE_MIN_MIN,BURO_MONTHS_BALANCE,,,,,
+126,PREV_WEEKDAY_APPR_PROCESS_START_TUESDAY_MEAN,WEEKDAY_APPR_PROCESS_START,application_{train|test}.csv,WEEKDAY_APPR_PROCESS_START,On which day of the week did the client apply for the loan,,WEEKDAY_APPR_PROCESS_START
+127,INSTAL_AMT_PAYMENT_MEAN,INSTAL_AMT_PAYMENT,installments_payments.csv,AMT_PAYMENT,What the client actually paid on previous credit on this installment,,INSTAL_AMT_PAYMENT
+128,APPROVED_RATE_DOWN_PAYMENT_MIN,PREV_RATE_DOWN_PAYMENT,previous_application.csv,RATE_DOWN_PAYMENT,Down payment rate normalized on previous credit,normalized,PREV_RATE_DOWN_PAYMENT
+129,APPROVED_RATE_DOWN_PAYMENT_MAX,PREV_RATE_DOWN_PAYMENT,previous_application.csv,RATE_DOWN_PAYMENT,Down payment rate normalized on previous credit,normalized,PREV_RATE_DOWN_PAYMENT
+130,EXT_SOURCE_2,EXT_SOURCE_2,application_{train|test}.csv,EXT_SOURCE_2,Normalized score from external data source,normalized,EXT_SOURCE_2
+131,BURO_CREDIT_TYPE_Car loan_MEAN,BURO_CREDIT_TYPE,bureau.csv,CREDIT_TYPE,"Type of Credit Bureau credit (Car, cash,...)",,BURO_CREDIT_TYPE
+132,APPROVED_HOUR_APPR_PROCESS_START_MEAN,PREV_HOUR_APPR_PROCESS_START,previous_application.csv,HOUR_APPR_PROCESS_START,Approximately at what day hour did the client apply for the previous application,rounded,PREV_HOUR_APPR_PROCESS_START
+133,INSTAL_AMT_INSTALMENT_MAX,INSTAL_AMT_INSTALMENT,installments_payments.csv,AMT_INSTALMENT,What was the prescribed installment amount of previous credit on this installment,,INSTAL_AMT_INSTALMENT
+134,REFUSED_AMT_GOODS_PRICE_MEAN,PREV_AMT_GOODS_PRICE,previous_application.csv,AMT_GOODS_PRICE,Goods price of good that client asked for (if applicable) on the previous application,,PREV_AMT_GOODS_PRICE
+135,PREV_CHANNEL_TYPE_Country-wide_MEAN,PREV_CHANNEL_TYPE_Country-wide,,,,,
+136,NAME_FAMILY_STATUS_Unknown,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+137,PREV_NAME_PRODUCT_TYPE_walk-in_MEAN,PREV_NAME_PRODUCT_TYPE_walk-in,,,,,
+138,ACTIVE_DAYS_CREDIT_ENDDATE_MAX,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+139,NAME_FAMILY_STATUS_Single / not married,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+140,PREV_NAME_CLIENT_TYPE_Repeater_MEAN,PREV_NAME_CLIENT_TYPE,previous_application.csv,NAME_CLIENT_TYPE,Was the client old or new client when applying for the previous application,,PREV_NAME_CLIENT_TYPE
+141,APARTMENTS_AVG,APARTMENTS_AVG,application_{train|test}.csv,APARTMENTS_AVG,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,APARTMENTS_AVG
+142,NONLIVINGAPARTMENTS_MODE,NONLIVINGAPARTMENTS_MODE,application_{train|test}.csv,NONLIVINGAPARTMENTS_MODE,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,NONLIVINGAPARTMENTS_MODE
+143,PREV_NAME_TYPE_SUITE_nan_MEAN,NAME_TYPE_SUITE,application_{train|test}.csv,NAME_TYPE_SUITE,Who was accompanying client when he was applying for the loan,,NAME_TYPE_SUITE
+144,INSTAL_AMT_INSTALMENT_MEAN,INSTAL_AMT_INSTALMENT,installments_payments.csv,AMT_INSTALMENT,What was the prescribed installment amount of previous credit on this installment,,INSTAL_AMT_INSTALMENT
+145,APPROVED_AMT_APPLICATION_MAX,PREV_AMT_APPLICATION,previous_application.csv,AMT_APPLICATION,For how much credit did client ask on the previous application,,PREV_AMT_APPLICATION
+146,BURO_DAYS_CREDIT_UPDATE_MEAN,BURO_DAYS_CREDIT_UPDATE,bureau.csv,DAYS_CREDIT_UPDATE,How many days before loan application did last information about the Credit Bureau credit come,time only relative to the application,BURO_DAYS_CREDIT_UPDATE
+147,LIVINGAREA_MODE,LIVINGAREA_MODE,application_{train|test}.csv,LIVINGAREA_MODE,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,LIVINGAREA_MODE
+148,OCCUPATION_TYPE_High skill tech staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+149,AMT_INCOME_TOTAL,AMT_INCOME_TOTAL,application_{train|test}.csv,AMT_INCOME_TOTAL,Income of the client,,AMT_INCOME_TOTAL
+150,BURO_STATUS_2_MEAN_MEAN,BURO_STATUS_2,,,,,
+151,BASEMENTAREA_MODE,BASEMENTAREA_MODE,application_{train|test}.csv,BASEMENTAREA_MODE,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,BASEMENTAREA_MODE
+152,APPROVED_RATE_DOWN_PAYMENT_MEAN,PREV_RATE_DOWN_PAYMENT,previous_application.csv,RATE_DOWN_PAYMENT,Down payment rate normalized on previous credit,normalized,PREV_RATE_DOWN_PAYMENT
+153,POS_MONTHS_BALANCE_MEAN,POS_MONTHS_BALANCE,POS_CASH_balance.csv,MONTHS_BALANCE,"Month of balance relative to application date (-1 means the information to the freshest monthly snapshot, 0 means the information at application - often it will be the same as -1 as many banks are not updating the information to Credit Bureau regularly )",time only relative to the application,POS_MONTHS_BALANCE
+154,CC_AMT_BALANCE_MIN,CC_AMT_BALANCE,,,,,
+155,NAME_FAMILY_STATUS_Widow,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+156,BURO_MONTHS_BALANCE_SIZE_MEAN,BURO_MONTHS_BALANCE,,,,,
+157,PREV_AMT_APPLICATION_MIN,PREV_AMT_APPLICATION,previous_application.csv,AMT_APPLICATION,For how much credit did client ask on the previous application,,PREV_AMT_APPLICATION
+158,INSTAL_PAYMENT_PERC_VAR,INSTAL_PAYMENT_PERC,,,What the client actually paid on previous credit on this installment relative to What was the prescribed installment amount of previous credit on this installment,,INSTAL_PAYMENT_PERC
+159,ORGANIZATION_TYPE_Self-employed,ORGANIZATION_TYPE,application_{train|test}.csv,ORGANIZATION_TYPE,Type of organization where client works,,ORGANIZATION_TYPE
+160,BURO_AMT_CREDIT_SUM_DEBT_MEAN,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+161,BURO_AMT_CREDIT_SUM_DEBT_MEAN,BURO_AMT_CREDIT_DEBT,,,Current debt on Credit Bureau credit,,BURO_AMT_CREDIT_DEBT
+162,ACTIVE_DAYS_CREDIT_MAX,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+163,ACTIVE_DAYS_CREDIT_ENDDATE_MEAN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+164,CLOSED_DAYS_CREDIT_MIN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+165,CLOSED_AMT_CREDIT_SUM_MEAN,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+166,OCCUPATION_TYPE_Low-skill Laborers,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+167,OCCUPATION_TYPE_Secretaries,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+168,PREV_AMT_DOWN_PAYMENT_MAX,PREV_AMT_DOWN_PAYMENT,previous_application.csv,AMT_DOWN_PAYMENT,Down payment on the previous application,,PREV_AMT_DOWN_PAYMENT
+169,INSTAL_PAYMENT_PERC_SUM,INSTAL_PAYMENT_PERC,,,What the client actually paid on previous credit on this installment relative to What was the prescribed installment amount of previous credit on this installment,,INSTAL_PAYMENT_PERC
+170,"PREV_NAME_TYPE_SUITE_Spouse, partner_MEAN",NAME_TYPE_SUITE,application_{train|test}.csv,NAME_TYPE_SUITE,Who was accompanying client when he was applying for the loan,,NAME_TYPE_SUITE
+171,NAME_EDUCATION_TYPE_Secondary / secondary special,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+172,CLOSED_DAYS_CREDIT_MAX,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+173,APPROVED_APP_CREDIT_PERC_MIN,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+174,ACTIVE_DAYS_CREDIT_VAR,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+175,POS_MONTHS_BALANCE_SIZE,POS_MONTHS_BALANCE,POS_CASH_balance.csv,MONTHS_BALANCE,"Month of balance relative to application date (-1 means the information to the freshest monthly snapshot, 0 means the information at application - often it will be the same as -1 as many banks are not updating the information to Credit Bureau regularly )",time only relative to the application,POS_MONTHS_BALANCE
+176,AMT_ANNUITY,AMT_ANNUITY,application_{train|test}.csv,AMT_ANNUITY,Loan annuity,,AMT_ANNUITY
+177,CLOSED_AMT_CREDIT_SUM_MAX,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+178,AMT_REQ_CREDIT_BUREAU_YEAR,AMT_REQ_CREDIT_BUREAU_YEAR,application_{train|test}.csv,AMT_REQ_CREDIT_BUREAU_YEAR,Number of enquiries to Credit Bureau about the client one day year (excluding last 3 months before application),,AMT_REQ_CREDIT_BUREAU_YEAR
+179,LIVINGAPARTMENTS_AVG,LIVINGAPARTMENTS_AVG,application_{train|test}.csv,LIVINGAPARTMENTS_AVG,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,LIVINGAPARTMENTS_AVG
+180,PREV_AMT_DOWN_PAYMENT_MIN,PREV_AMT_DOWN_PAYMENT,previous_application.csv,AMT_DOWN_PAYMENT,Down payment on the previous application,,PREV_AMT_DOWN_PAYMENT
+181,ACTIVE_AMT_CREDIT_SUM_SUM,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+182,PREV_CNT_PAYMENT_MEAN,PREV_CNT_PAYMENT,previous_application.csv,CNT_PAYMENT,Term of previous credit at application of the previous application,,PREV_CNT_PAYMENT
+183,REFUSED_HOUR_APPR_PROCESS_START_MIN,PREV_HOUR_APPR_PROCESS_START,previous_application.csv,HOUR_APPR_PROCESS_START,Approximately at what day hour did the client apply for the previous application,rounded,PREV_HOUR_APPR_PROCESS_START
+184,PREV_AMT_ANNUITY_MIN,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+185,PREV_NAME_YIELD_GROUP_high_MEAN,PREV_NAME_YIELD_GROUP,previous_application.csv,NAME_YIELD_GROUP,Grouped interest rate into small medium and high of the previous application,grouped,PREV_NAME_YIELD_GROUP
+186,LANDAREA_AVG,LANDAREA_AVG,application_{train|test}.csv,LANDAREA_AVG,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,LANDAREA_AVG
+187,APPROVED_AMT_ANNUITY_MEAN,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+188,INSTAL_PAYMENT_DIFF_MAX,INSTAL_PAYMENT_DIFF,,,What was the prescribed installment amount of previous credit on this installment minus What the client actually paid on previous credit on this installment,,INSTAL_PAYMENT_DIFF
+189,INSTAL_PAYMENT_DIFF_MEAN,INSTAL_PAYMENT_DIFF,,,What was the prescribed installment amount of previous credit on this installment minus What the client actually paid on previous credit on this installment,,INSTAL_PAYMENT_DIFF
+190,INSTAL_AMT_PAYMENT_SUM,INSTAL_AMT_PAYMENT,installments_payments.csv,AMT_PAYMENT,What the client actually paid on previous credit on this installment,,INSTAL_AMT_PAYMENT
+191,PREV_APP_CREDIT_PERC_MEAN,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+192,ACTIVE_DAYS_CREDIT_MIN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+193,APPROVED_AMT_DOWN_PAYMENT_MAX,PREV_AMT_DOWN_PAYMENT,previous_application.csv,AMT_DOWN_PAYMENT,Down payment on the previous application,,PREV_AMT_DOWN_PAYMENT
+194,BURO_AMT_ANNUITY_MEAN,BURO_AMT_ANNUITY,bureau.csv,AMT_ANNUITY,Annuity of the Credit Bureau credit,,BURO_AMT_ANNUITY
+195,PREV_NAME_PORTFOLIO_Cash_MEAN,PREV_NAME_PORTFOLIO_Cash,,,,,
+196,BURO_AMT_CREDIT_SUM_LIMIT_SUM,BURO_AMT_CREDIT_LIMIT,,,Current credit limit of credit card reported in Credit Bureau,,BURO_AMT_CREDIT_LIMIT
+197,PREV_NAME_YIELD_GROUP_middle_MEAN,PREV_NAME_YIELD_GROUP,previous_application.csv,NAME_YIELD_GROUP,Grouped interest rate into small medium and high of the previous application,grouped,PREV_NAME_YIELD_GROUP
+198,CC_AMT_CREDIT_LIMIT_ACTUAL_SUM,CC_AMT_CREDIT_LIMIT_ACTUAL,,,,,
+199,INSTAL_DPD_MEAN,INSTAL_DPD,,,When was the installments of previous credit paid actually relative to When the installment of previous credit was supposed to be paid,,INSTAL_DPD
+200,APPROVED_AMT_GOODS_PRICE_MEAN,PREV_AMT_GOODS_PRICE,previous_application.csv,AMT_GOODS_PRICE,Goods price of good that client asked for (if applicable) on the previous application,,PREV_AMT_GOODS_PRICE
+201,TOTALAREA_MODE,TOTALAREA_MODE,application_{train|test}.csv,TOTALAREA_MODE,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,TOTALAREA_MODE
+202,REFUSED_AMT_ANNUITY_MIN,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+203,REFUSED_DAYS_DECISION_MIN,PREV_DAYS_DECISION,previous_application.csv,DAYS_DECISION,Relative to current application when was the decision about previous application made,time only relative to the application,PREV_DAYS_DECISION
+204,YEARS_BEGINEXPLUATATION_MODE,YEARS_BEGINEXPLUATATION_MODE,application_{train|test}.csv,YEARS_BEGINEXPLUATATION_MODE,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,YEARS_BEGINEXPLUATATION_MODE
+205,APPROVED_HOUR_APPR_PROCESS_START_MAX,PREV_HOUR_APPR_PROCESS_START,previous_application.csv,HOUR_APPR_PROCESS_START,Approximately at what day hour did the client apply for the previous application,rounded,PREV_HOUR_APPR_PROCESS_START
+206,DAYS_EMPLOYED_PERC,DAYS_EMPLOYED_PERC,,,Age in days relative to days from start of current employment ,,DAYS_EMPLOYED_PERC
+207,PREV_NAME_TYPE_SUITE_Other_A_MEAN,NAME_TYPE_SUITE,application_{train|test}.csv,NAME_TYPE_SUITE,Who was accompanying client when he was applying for the loan,,NAME_TYPE_SUITE
+208,PREV_AMT_CREDIT_MEAN,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+209,REFUSED_HOUR_APPR_PROCESS_START_MAX,PREV_HOUR_APPR_PROCESS_START,previous_application.csv,HOUR_APPR_PROCESS_START,Approximately at what day hour did the client apply for the previous application,rounded,PREV_HOUR_APPR_PROCESS_START
+210,INSTAL_DPD_MAX,INSTAL_DPD,,,When was the installments of previous credit paid actually relative to When the installment of previous credit was supposed to be paid,,INSTAL_DPD
+211,NAME_EDUCATION_TYPE_Incomplete higher,NAME_EDUCATION_TYPE,application_{train|test}.csv,NAME_EDUCATION_TYPE,Level of highest education the client achieved,,NAME_EDUCATION_TYPE
+212,REFUSED_CNT_PAYMENT_SUM,PREV_CNT_PAYMENT,previous_application.csv,CNT_PAYMENT,Term of previous credit at application of the previous application,,PREV_CNT_PAYMENT
+213,PREV_NAME_PAYMENT_TYPE_Cash through the bank_MEAN,PREV_NAME_PAYMENT_TYPE_Cash through the bank,,,,,
+214,INSTAL_AMT_PAYMENT_MIN,INSTAL_AMT_PAYMENT,installments_payments.csv,AMT_PAYMENT,What the client actually paid on previous credit on this installment,,INSTAL_AMT_PAYMENT
+215,INSTAL_DBD_SUM,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+216,INSTAL_DBD_SUM,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+217,OCCUPATION_TYPE_Accountants,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+218,ACTIVE_DAYS_CREDIT_MEAN,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+219,ANNUITY_INCOME_PERC,ANNUITY_INCOME_PERC,,,Loan annuity relative to Income of the client,,ANNUITY_INCOME_PERC
+220,BURO_DAYS_CREDIT_ENDDATE_MEAN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+221,NAME_INCOME_TYPE_Working,NAME_INCOME_TYPE_Working,,,,,
+222,BURO_STATUS_C_MEAN_MEAN,BURO_STATUS_C,,,,,
+223,AMT_REQ_CREDIT_BUREAU_QRT,AMT_REQ_CREDIT_BUREAU_QRT,application_{train|test}.csv,AMT_REQ_CREDIT_BUREAU_QRT,Number of enquiries to Credit Bureau about the client 3 month before application (excluding one month before application),,AMT_REQ_CREDIT_BUREAU_QRT
+224,OCCUPATION_TYPE_Private service staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+225,PREV_CODE_REJECT_REASON_SCOFR_MEAN,PREV_CODE_REJECT_REASON,previous_application.csv,CODE_REJECT_REASON,Why was the previous application rejected,,PREV_CODE_REJECT_REASON
+226,CLOSED_DAYS_CREDIT_VAR,BURO_DAYS_CREDIT,bureau.csv,DAYS_CREDIT,How many days before current application did client apply for Credit Bureau credit,time only relative to the application,BURO_DAYS_CREDIT
+227,PREV_HOUR_APPR_PROCESS_START_MEAN,PREV_HOUR_APPR_PROCESS_START,previous_application.csv,HOUR_APPR_PROCESS_START,Approximately at what day hour did the client apply for the previous application,rounded,PREV_HOUR_APPR_PROCESS_START
+228,PREV_AMT_CREDIT_MAX,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+229,CC_AMT_RECIVABLE_MIN,CC_AMT_RECIVABLE,,,,,
+230,APPROVED_AMT_APPLICATION_MEAN,PREV_AMT_APPLICATION,previous_application.csv,AMT_APPLICATION,For how much credit did client ask on the previous application,,PREV_AMT_APPLICATION
+231,REGION_POPULATION_RELATIVE,REGION_POPULATION_RELATIVE,application_{train|test}.csv,REGION_POPULATION_RELATIVE,Normalized population of region where client lives (higher number means the client lives in more populated region),normalized ,REGION_POPULATION_RELATIVE
+232,OCCUPATION_TYPE_Cleaning staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+233,BURO_CREDIT_TYPE_Mortgage_MEAN,BURO_CREDIT_TYPE,bureau.csv,CREDIT_TYPE,"Type of Credit Bureau credit (Car, cash,...)",,BURO_CREDIT_TYPE
+234,PREV_NAME_GOODS_CATEGORY_Construction Materials_MEAN,PREV_NAME_GOODS_CATEGORY,previous_application.csv,NAME_GOODS_CATEGORY,What kind of goods did the client apply for in the previous application,,PREV_NAME_GOODS_CATEGORY
+235,PREV_NAME_PRODUCT_TYPE_x-sell_MEAN,PREV_NAME_PRODUCT_TYPE_x-sell,,,,,
+236,OBS_30_CNT_SOCIAL_CIRCLE,OBS_30_CNT_SOCIAL_CIRCLE,application_{train|test}.csv,OBS_30_CNT_SOCIAL_CIRCLE,How many observation of client's social surroundings with observable 30 DPD (days past due) default,,OBS_30_CNT_SOCIAL_CIRCLE
+237,NAME_FAMILY_STATUS_Married,NAME_FAMILY_STATUS,application_{train|test}.csv,NAME_FAMILY_STATUS,Family status of the client,,NAME_FAMILY_STATUS
+238,PREV_APP_CREDIT_PERC_MIN,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+239,PREV_NAME_CONTRACT_STATUS_Refused_MEAN,NAME_CONTRACT_STATUS,credit_card_balance.csv,NAME_CONTRACT_STATUS,"Contract status (active signed,...) on the previous credit",,NAME_CONTRACT_STATUS
+240,PREV_WEEKDAY_APPR_PROCESS_START_WEDNESDAY_MEAN,WEEKDAY_APPR_PROCESS_START,application_{train|test}.csv,WEEKDAY_APPR_PROCESS_START,On which day of the week did the client apply for the loan,,WEEKDAY_APPR_PROCESS_START
+241,DAYS_ID_PUBLISH,DAYS_ID_PUBLISH,application_{train|test}.csv,DAYS_ID_PUBLISH,How many days before the application did client change the identity document with which he applied for the loan,time only relative to the application,DAYS_ID_PUBLISH
+242,CODE_GENDER,CODE_GENDER,application_{train|test}.csv,CODE_GENDER,Gender of the client,,CODE_GENDER
+243,INSTAL_DAYS_ENTRY_PAYMENT_SUM,INSTAL_DAYS_ENTRY_PAYMENT,installments_payments.csv,DAYS_ENTRY_PAYMENT,When was the installments of previous credit paid actually (relative to application date of current loan),time only relative to the application,INSTAL_DAYS_ENTRY_PAYMENT
+244,PREV_AMT_APPLICATION_MAX,PREV_AMT_APPLICATION,previous_application.csv,AMT_APPLICATION,For how much credit did client ask on the previous application,,PREV_AMT_APPLICATION
+245,ELEVATORS_MODE,ELEVATORS_MODE,application_{train|test}.csv,ELEVATORS_MODE,"Normalized information about building where the client lives, What is average (_AVG suffix), modus (_MODE suffix), median (_MEDI suffix) apartment size, common area, living area, age of building, number of elevators, number of entrances, state of the building, number of floor",normalized,ELEVATORS_MODE
+246,PREV_NAME_TYPE_SUITE_Family_MEAN,NAME_TYPE_SUITE,application_{train|test}.csv,NAME_TYPE_SUITE,Who was accompanying client when he was applying for the loan,,NAME_TYPE_SUITE
+247,DEF_60_CNT_SOCIAL_CIRCLE,DEF_60_CNT_SOCIAL_CIRCLE,application_{train|test}.csv,DEF_60_CNT_SOCIAL_CIRCLE,How many observation of client's social surroundings defaulted on 60 (days past due) DPD,,DEF_60_CNT_SOCIAL_CIRCLE
+248,APPROVED_APP_CREDIT_PERC_VAR,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+249,CNT_FAM_MEMBERS,CNT_FAM_MEMBERS,application_{train|test}.csv,CNT_FAM_MEMBERS,How many family members does client have,,CNT_FAM_MEMBERS
+250,PREV_PRODUCT_COMBINATION_Cash X-Sell: middle_MEAN,PREV_PRODUCT_COMBINATION_Cash X-Sell: middle,,,,,
+251,INSTAL_DAYS_ENTRY_PAYMENT_MEAN,INSTAL_DAYS_ENTRY_PAYMENT,installments_payments.csv,DAYS_ENTRY_PAYMENT,When was the installments of previous credit paid actually (relative to application date of current loan),time only relative to the application,INSTAL_DAYS_ENTRY_PAYMENT
+252,APPROVED_AMT_CREDIT_MIN,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+253,PREV_RATE_DOWN_PAYMENT_MEAN,PREV_RATE_DOWN_PAYMENT,previous_application.csv,RATE_DOWN_PAYMENT,Down payment rate normalized on previous credit,normalized,PREV_RATE_DOWN_PAYMENT
+254,PREV_AMT_DOWN_PAYMENT_MEAN,PREV_AMT_DOWN_PAYMENT,previous_application.csv,AMT_DOWN_PAYMENT,Down payment on the previous application,,PREV_AMT_DOWN_PAYMENT
+255,ACTIVE_DAYS_CREDIT_ENDDATE_MIN,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+256,PREV_APP_CREDIT_PERC_VAR,PREV_APP_CREDIT_PERC,,,For how much credit did client ask on the previous application relative to Final credit amount on the previous application,,PREV_APP_CREDIT_PERC
+257,APPROVED_CNT_PAYMENT_MEAN,PREV_CNT_PAYMENT,previous_application.csv,CNT_PAYMENT,Term of previous credit at application of the previous application,,PREV_CNT_PAYMENT
+258,OCCUPATION_TYPE_Security staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+259,PREV_NAME_TYPE_SUITE_Unaccompanied_MEAN,NAME_TYPE_SUITE,application_{train|test}.csv,NAME_TYPE_SUITE,Who was accompanying client when he was applying for the loan,,NAME_TYPE_SUITE
+260,ACTIVE_AMT_CREDIT_SUM_MAX,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+261,INSTAL_DBD_MAX,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+262,INSTAL_DBD_MAX,INSTAL_DBD,,,When the installment of previous credit was supposed to be paid relative to When was the installments of previous credit paid actually,,INSTAL_DBD
+263,AMT_GOODS_PRICE,AMT_GOODS_PRICE,application_{train|test}.csv,AMT_GOODS_PRICE,For consumer loans it is the price of the goods for which the loan is given,,AMT_GOODS_PRICE
+264,ACTIVE_AMT_CREDIT_MAX_OVERDUE_MEAN,BURO_AMT_CREDIT_OVERDUE,,,Amount overdue on the Credit Bureau credit so far (at application date of loan in our sample),,BURO_AMT_CREDIT_OVERDUE
+265,APPROVED_AMT_CREDIT_MEAN,PREV_AMT_CREDIT,previous_application.csv,AMT_CREDIT,"Final credit amount on the previous application. This differs from AMT_APPLICATION in a way that the AMT_APPLICATION is the amount for which the client initially applied for, but during our approval process he could have received different amount - AMT_CREDIT",,PREV_AMT_CREDIT
+266,POS_SK_DPD_DEF_MEAN,POS_SK_DPD_DEF,POS_CASH_balance.csv,SK_DPD_DEF,DPD during the month with tolerance (debts with low loan amounts are ignored) of the previous credit,,POS_SK_DPD_DEF
+267,PREV_NAME_GOODS_CATEGORY_Furniture_MEAN,PREV_NAME_GOODS_CATEGORY,previous_application.csv,NAME_GOODS_CATEGORY,What kind of goods did the client apply for in the previous application,,PREV_NAME_GOODS_CATEGORY
+268,PREV_NAME_TYPE_SUITE_Other_B_MEAN,NAME_TYPE_SUITE,application_{train|test}.csv,NAME_TYPE_SUITE,Who was accompanying client when he was applying for the loan,,NAME_TYPE_SUITE
+269,BURO_STATUS_X_MEAN_MEAN,BURO_STATUS_X,,,,,
+270,PREV_NAME_SELLER_INDUSTRY_Consumer electronics_MEAN,PREV_NAME_SELLER_INDUSTRY_Consumer electronics,,,,,
+271,ACTIVE_MONTHS_BALANCE_SIZE_SUM,BURO_MONTHS_BALANCE,,,,,
+272,EXT_SOURCE_3,EXT_SOURCE_3,application_{train|test}.csv,EXT_SOURCE_3,Normalized score from external data source,normalized,EXT_SOURCE_3
+273,PREV_NAME_PORTFOLIO_Cards_MEAN,PREV_NAME_PORTFOLIO_Cards,,,,,
+274,POS_NAME_CONTRACT_STATUS_Completed_MEAN,NAME_CONTRACT_STATUS,credit_card_balance.csv,NAME_CONTRACT_STATUS,"Contract status (active signed,...) on the previous credit",,NAME_CONTRACT_STATUS
+275,BURO_AMT_CREDIT_SUM_MAX,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+276,ACTIVE_AMT_CREDIT_SUM_MEAN,BURO_AMT_CREDIT,,,Info about Current credit for the Credit Bureau credit,,BURO_AMT_CREDIT
+277,DAYS_BIRTH,DAYS_BIRTH,application_{train|test}.csv,DAYS_BIRTH,Client's age in days at the time of application,time only relative to the application,DAYS_BIRTH
+278,APPROVED_AMT_APPLICATION_MIN,PREV_AMT_APPLICATION,previous_application.csv,AMT_APPLICATION,For how much credit did client ask on the previous application,,PREV_AMT_APPLICATION
+279,PREV_CODE_REJECT_REASON_HC_MEAN,PREV_CODE_REJECT_REASON,previous_application.csv,CODE_REJECT_REASON,Why was the previous application rejected,,PREV_CODE_REJECT_REASON
+280,CLOSED_AMT_CREDIT_MAX_OVERDUE_MEAN,BURO_AMT_CREDIT_OVERDUE,,,Amount overdue on the Credit Bureau credit so far (at application date of loan in our sample),,BURO_AMT_CREDIT_OVERDUE
+281,BURO_DAYS_CREDIT_ENDDATE_MAX,BURO_DAYS_CREDIT_ENDDATE,bureau.csv,DAYS_CREDIT_ENDDATE,Remaining duration of CB credit (in days) at the time of application in Home Credit,time only relative to the application,BURO_DAYS_CREDIT_ENDDATE
+282,OCCUPATION_TYPE_Medicine staff,OCCUPATION_TYPE,application_{train|test}.csv,OCCUPATION_TYPE,What kind of occupation does the client have,,OCCUPATION_TYPE
+283,CC_AMT_CREDIT_LIMIT_ACTUAL_MEAN,CC_AMT_CREDIT_LIMIT_ACTUAL,,,,,
+284,PREV_NAME_GOODS_CATEGORY_Consumer Electronics_MEAN,PREV_NAME_GOODS_CATEGORY,previous_application.csv,NAME_GOODS_CATEGORY,What kind of goods did the client apply for in the previous application,,PREV_NAME_GOODS_CATEGORY
+285,APPROVED_AMT_ANNUITY_MAX,PREV_AMT_ANNUITY,previous_application.csv,AMT_ANNUITY,Annuity of previous application,,PREV_AMT_ANNUITY
+286,ACTIVE_DAYS_CREDIT_UPDATE_MEAN,BURO_DAYS_CREDIT_UPDATE,bureau.csv,DAYS_CREDIT_UPDATE,How many days before loan application did last information about the Credit Bureau credit come,time only relative to the application,BURO_DAYS_CREDIT_UPDATE
