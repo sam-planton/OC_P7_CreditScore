@@ -220,8 +220,16 @@ def show_client_data_bivariate(data_client, data_group, varlist):
         var3 = 'Score'
         if grphtype == 'Scatterplot':
             # With sccaterplot
-            # fig = px.scatter(data_group, x=var1, y=var2, color=var3, hover_data=[var3], color_continuous_scale='RdYlGn')
-            fig = px.strip(data_group, x=var1, y=var2, color=var3)
+            # We add jitter for binary (categorical) variables
+            jitter_amount = 0.06  # adjust the amount of jitter as needed
+            data_group_jittered = data_group[:500].copy()  # make a copy of the data
+            if len(np.unique(data_group[var1])) == 2:
+                data_group_jittered[var1] += np.random.normal(0, jitter_amount, len(data_group_jittered))
+                print('var1 is binary')
+            if len(np.unique(data_group[var2])) == 2:
+                data_group_jittered[var2] += np.random.normal(0, jitter_amount, len(data_group_jittered))
+                print('var2 is binary')
+            fig = px.scatter(data_group, x=var1, y=var2, color=var3, color_continuous_scale='RdYlGn')
         elif grphtype == 'Heatmap':
             # With heatmap
             fig = px.density_contour(data_group, x=var1, y=var2, z=var3, histfunc="avg")
