@@ -1,20 +1,23 @@
 import mlflow.pyfunc
 from flask import Flask, jsonify, request
 import pandas as pd
+import joblib
 
-# Load the model from the server using its URI
-mlflow.set_tracking_uri("http://13.37.31.96:5000")
-client = mlflow.tracking.MlflowClient()
-experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
-runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
-run_id = \
-    runs[runs['tags.mlflow.runName'] == 'LogisticRegression'].run_id.values[0]
-run = client.get_run(run_id)
-artifacts_uri = run.info.artifact_uri
-model_uri = f"{artifacts_uri}/model"
-# model = mlflow.pyfunc.load_model(model_uri)
-model = mlflow.sklearn.load_model(model_uri)
-print(model_uri)
+# # Load the model from the server using its URI
+# mlflow.set_tracking_uri("http://13.37.31.96:5000")
+# client = mlflow.tracking.MlflowClient()
+# experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
+# runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
+# run_id = \
+#     runs[runs['tags.mlflow.runName'] == 'LogisticRegression'].run_id.values[0]
+# run = client.get_run(run_id)
+# artifacts_uri = run.info.artifact_uri
+# model_uri = f"{artifacts_uri}/model"
+# # model = mlflow.pyfunc.load_model(model_uri)
+# model = mlflow.sklearn.load_model(model_uri)
+# print(model_uri)
+
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -23,6 +26,9 @@ app = Flask(__name__)
 # Define a route for making predictions
 @app.route("/predict", methods=["POST"])
 def predict():
+    # Import the model
+    model = joblib.load('/data/model.pkl')
+
     # Get the input data from the request body
     data = request.json
 
