@@ -8,7 +8,7 @@ client = mlflow.tracking.MlflowClient()
 experiment = mlflow.get_experiment_by_name('MLflow_FinalModel')
 runs = mlflow.search_runs(experiment_ids=experiment.experiment_id)
 run_id = \
-    runs[runs['tags.mlflow.runName'] == 'LogisticRegression_'].run_id.values[0]
+    runs[runs['tags.mlflow.runName'] == 'LogisticRegression'].run_id.values[0]
 run = client.get_run(run_id)
 artifacts_uri = run.info.artifact_uri
 model_uri = f"{artifacts_uri}/model"

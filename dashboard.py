@@ -20,7 +20,8 @@ def fetch_data(artifacts_uri):
     # To lighten the load in memory, set columns to float32 directly when loading
     # (load a sample of the dataset to identify columns)
 
-    nrows = 10000
+    nrows_train = 10000
+    nrows_test = 100
 
     # Load the training data
     art_uri = f"{artifacts_uri}/Xtrain.csv"
@@ -28,10 +29,10 @@ def fetch_data(artifacts_uri):
     sample_df = pd.read_csv(filename, nrows=50, index_col='SK_ID_CURR')
     float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
     float32_cols = {c: np.float32 for c in float_cols}
-    Xtrain = pd.read_csv(filename, engine='c', dtype=float32_cols, nrows=nrows, index_col='SK_ID_CURR')
+    Xtrain = pd.read_csv(filename, engine='c', dtype=float32_cols, nrows=nrows_train, index_col='SK_ID_CURR')
     # Xtrain = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), index_col='SK_ID_CURR')
     art_uri = f"{artifacts_uri}/Xtrain_addinfo.csv"
-    Xtrain_addinfo = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), nrows=nrows, index_col='SK_ID_CURR')
+    Xtrain_addinfo = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), nrows=nrows_train, index_col='SK_ID_CURR')
 
     # Load the testing data (sample clients)
     art_uri = f"{artifacts_uri}/Xtest.csv"
@@ -39,10 +40,10 @@ def fetch_data(artifacts_uri):
     sample_df = pd.read_csv(filename, nrows=50, index_col='SK_ID_CURR')
     float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
     float32_cols = {c: np.float32 for c in float_cols}
-    Xtest = pd.read_csv(filename, engine='c', dtype=float32_cols, nrows=nrows, index_col='SK_ID_CURR')
+    Xtest = pd.read_csv(filename, engine='c', dtype=float32_cols, nrows=nrows_test, index_col='SK_ID_CURR')
     # Xtest = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), index_col='SK_ID_CURR')
     art_uri = f"{artifacts_uri}/Xtest_addinfo.csv"
-    Xtest_addinfo = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), nrows=nrows, index_col='SK_ID_CURR')
+    Xtest_addinfo = pd.read_csv(mlflow.artifacts.download_artifacts(art_uri), nrows=nrows_test, index_col='SK_ID_CURR')
 
     # Load features description
     art_uri = f"{artifacts_uri}/description_df.csv"
@@ -306,7 +307,9 @@ def main():
         # MLflow tracking server, containing data & models
         mlflow.set_tracking_uri("http://13.37.31.96:5000")
         # Flask API endpoint to return model prediction
-        API_endpoint = "http://13.37.31.96:8000/predict"
+        # API_endpoint = "http://13.37.31.96:8000/predict"
+        API_endpoint = "https://sp-oc-p7-api.herokuapp.com/predict"
+
     else:
         # MLflow tracking server, containing data & models
         mlflow.set_tracking_uri("http://127.0.0.1:5000")

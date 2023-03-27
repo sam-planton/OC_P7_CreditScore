@@ -36,7 +36,8 @@ jobs:
 
     - name: Run API unittest
       env:
-        API_URL: http://${{ secrets.SERVER_IP }}:8000/predict
+        # API_URL: http://${{ secrets.SERVER_IP }}:8000/predict
+        API_URL: https://sp-oc-p7-api.herokuapp.com/predict
       run: pytest test_api.py
 
     - name: Deploying Dashboard to Heroku
