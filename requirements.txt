@@ -11,3 +11,4 @@ imblearn
 pytest
 gunicorn
 flask
+boto3
