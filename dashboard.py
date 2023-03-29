@@ -598,7 +598,7 @@ def main():
         sur la feature implique une augmentation de la probabilité de non-remboursement.  A l'opposé, les points verts avec une valeur SHAP négative
         (à gauche) désignent des clients pour qui une augmentation de la valeur sur la feature implique une diminution de la probabilité de non-remboursement.''')
         fig, ax = plt.subplots(facecolor='None')
-        shap.summary_plot(shap_values, features=Xtrain[:N_shap_samples],
+        im = shap.summary_plot(shap_values, features=Xtrain[:N_shap_samples],
                           plot_type='dot', max_display=15, cmap="RdYlGn", alpha=1, axis_color='w', show=False)
         # Set colors to white
         ax.set_facecolor("None")
