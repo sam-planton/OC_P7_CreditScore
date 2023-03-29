@@ -7,13 +7,12 @@ import matplotlib.pyplot as plt
 import matplotlib
 from streamlit_shap import st_shap
 import plotly.express as px
-from matplotlib.patches import FancyBboxPatch
-import matplotlib.patheffects as path_effects
 import plotly.figure_factory as ff
 import requests
 import plotly.graph_objects as go
 import time
 import os.path as op
+from streamlit.components.v1 import html
 
 
 @st.cache_data
@@ -67,39 +66,6 @@ def compute_shap(_model, Xtrain, N_shap_samples):
     return explainer, shap_values
 
 
-def color_gauge(score, threshold):
-    score = (1 - score) * 100
-    threshold = (1 - threshold) * 100
-    min_val = 0
-    max_val = 100
-
-    fig, ax = plt.subplots(figsize=(7, 0.5), facecolor='None')
-    cmap = plt.get_cmap('RdYlGn')
-    norm = plt.Normalize(min_val, max_val)
-
-    ax.set_xlim(-1, 101)
-    ax.set_ylim(-1, 101)
-
-    rect = FancyBboxPatch((0, 0), score, 100, boxstyle='round, pad=1, rounding_size=5', linewidth=0,
-                          color=cmap(norm(score)), clip_on=False, alpha=0.9, zorder=2, antialiased=True, snap=True,
-                          path_effects=[path_effects.withSimplePatchShadow()])
-    ax.add_patch(rect)
-    ax.add_patch(rect)
-    ax.axvline(x=threshold, color='yellow', linestyle='-', linewidth=2)
-    ax.annotate('Seuil', xy=(threshold, 100), xytext=(threshold, 180), ha='center', color='white', fontsize=10,
-                arrowprops=dict(facecolor='white', arrowstyle='-|>', color='white'))
-    ax.set_facecolor("None")
-    ax.tick_params(axis='both', colors='white')
-    plt.setp(ax.get_xticklabels(), color="white", fontsize=10)
-    plt.setp(ax.get_yticklabels(), color="white", fontsize=10)
-    for spine in ax.spines.values():
-        spine.set_color('white')
-
-    plt.yticks([])
-
-    return fig
-
-
 def show_client_data(data_client, data_group, description_df, varlist, do_subgrp):
     theme_plotly = None  # None or 'streamlit'
 
@@ -109,7 +75,6 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
     for i in range(len(cols)):
         with cols[i]:
             options = ['<Sélectionnez une variable>'] + varlist
-            value = options[0]  # default
             var = st.selectbox(f'Sélectionnez la variable à visualiser', options, key=i)
             if var != options[0]:
 
@@ -137,7 +102,6 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
                     fig.update_layout(legend=dict(orientation='h', yanchor='top', y=-0.15, xanchor='left', x=0, ), )
                     fig.update_yaxes(showticklabels=False, showgrid=False, title='Densité', title_font=dict(size=18),
                                      tickfont=dict(size=18))
-                    fig.update_layout(height=400)
 
                 # === Bar plot, for binary variables
                 elif data_group[var].nunique() <= 2:
@@ -177,8 +141,9 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
                     fig.update_layout(xaxis=dict(tickfont=dict(size=18)), yaxis=dict(tickfont=dict(size=18)))
                     fig.update_xaxes(title='Nombre de clients')
                     fig.update_yaxes(showticklabels=True, showgrid=False, title='')
-                    fig.update_layout(height=400)
+
                 # Show plot
+                fig.update_layout(height=500)
                 st.plotly_chart(fig, use_container_width=True, theme=theme_plotly)
 
                 # Show info about var and group
@@ -211,18 +176,18 @@ def show_client_data_bivariate(data_client, data_group, varlist):
         var3 = 'Score'
         # We add jitter for binary (categorical) variables
         jitter_amount = 0.06  # adjust the amount of jitter as needed
-        data_group_jittered = data_group[:500].copy()  # make a copy of the data
+        data_group_jitter = data_group[:500].copy()  # make a copy of the data
         if len(np.unique(data_group[var1])) == 2:
-            data_group_jittered[var1] += np.random.normal(0, jitter_amount, len(data_group_jittered))
+            data_group_jitter[var1] += np.random.normal(0, jitter_amount, len(data_group_jitter))
         if len(np.unique(data_group[var2])) == 2:
-            data_group_jittered[var2] += np.random.normal(0, jitter_amount, len(data_group_jittered))
-        data_group_jittered = data_group_jittered.round(2)
+            data_group_jitter[var2] += np.random.normal(0, jitter_amount, len(data_group_jitter))
+        data_group_jitter = data_group_jitter.round(2)
         if grphtype == 'Scatterplot':
             # With sccaterplot
-            fig = px.scatter(data_group_jittered, x=var1, y=var2, color=var3, color_continuous_scale='RdYlGn')
+            fig = px.scatter(data_group_jitter, x=var1, y=var2, color=var3, color_continuous_scale='RdYlGn')
         elif grphtype == 'Heatmap':
             # With heatmap
-            fig = px.density_contour(data_group_jittered, x=var1, y=var2, z=var3, histfunc="avg")
+            fig = px.density_contour(data_group_jitter, x=var1, y=var2, z=var3, histfunc="avg")
             fig.update_traces(contours_coloring="fill", contours_showlabels=False, colorscale='RdYlGn')
             fig.update_traces(colorbar_title='Score Moyen', selector=dict(type='histogram2dcontour'))
             # fig = px.density_heatmap(data_group, x=var1, y=var2, z=var3, histfunc="avg",
@@ -234,7 +199,7 @@ def show_client_data_bivariate(data_client, data_group, varlist):
         fig.update_layout(legend=dict(yanchor="top", y=1.08, xanchor="left", x=0.01))
         # Layout
         fig.update_coloraxes(colorbar_title_side='right')
-        fig.update_layout(height=600, width=600)
+        fig.update_layout(height=650, width=650)
         st.plotly_chart(fig, use_container_width=False, theme=None)
 
 
@@ -299,17 +264,8 @@ def main():
     # Streamlit page config
     st.set_page_config(page_title="Credit Score", page_icon="🏦", layout="wide")
 
-    # Run the app using local data/model or using server-based data/model/API
-    remote_app = True
-
-    # Get the cloud data location for the run of interest (that contains data & model)
-    if remote_app:
-        # Flask API endpoint to return model prediction
-        API_endpoint = "https://sp-oc-p7-api.herokuapp.com/predict"
-
-    else:
-        # MLflow tracking server, containing data & models
-        mlflow.set_tracking_uri("http://127.0.0.1:5000")
+    # Flask API endpoint to return model prediction
+    API_endpoint = "https://sp-oc-p7-api.herokuapp.com/predict"
 
     # =========================== FETCH DATA & MODEL =========================== #
     Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df = fetch_data()
@@ -317,7 +273,7 @@ def main():
     metrics = pd.read_csv(op.join('data', 'run_info.csv'))
 
     # Compute feature importances based on the SHAP values
-    N_shap_samples = 500
+    N_shap_samples = 300
     explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
     feature_importances_df = pd.DataFrame(np.mean(np.abs(shap_values), axis=0), index=Xtrain.columns, columns=['SHAP'])
 
@@ -342,7 +298,9 @@ def main():
 
     with st.expander("Cliquez ici pour développer les instructions"):
         st.write("""
-                Pour commencer, veuillez choisir un des clients dans le menu de la barre latérale.  
+                Pour commencer, veuillez choisir un des clients dans le menu de la barre latérale. Il s'agit 
+                d'une liste de client dont les informations sont connues et dont on souhaite déterminer le
+                *score crédit*.   
                 
                 Veuillez ensuite sélectionner un des quatre onglets ci-dessous.
                 - **🗠 Visualiser les données du client**: Cet onglet vous permet de visualiser les données du 
@@ -372,7 +330,6 @@ def main():
     clist = ['<Sélectionnez un client>'] + clist
     client_id = clist[0]  # default
     score = 0
-
     client_id = st.sidebar.selectbox('Sélectionnez le client (ou entrez son identifiant)', clist, key=1000)
     if client_id == clist[0]:
         pass
@@ -483,14 +440,13 @@ def main():
             if predict_btn:
 
                 # === Get prediction and score
-                if remote_app:
-                    # using API on the server
-                    st.write('Model API: ' + API_endpoint)
-                    response = requests.post(API_endpoint, json=data_sample.to_dict())
-                    pred = response.json()[0]
-                else:
-                    # using downloaded model
-                    pred = model.predict_proba(data_sample)[0][1]
+                # using API on the server
+                st.write('Model API: ' + API_endpoint)
+                response = requests.post(API_endpoint, json=data_sample.to_dict())
+                pred = response.json()[0]
+
+                # # using downloaded model
+                # pred = model.predict_proba(data_sample)[0][1]
                 score = (1 - pred) * 100
 
                 col1, col2 = st.columns([0.5, 1])
@@ -529,8 +485,6 @@ def main():
             if score == 0:
                 st.write('_Veuillez calculer le score du client_')
             else:
-                col1, col2, col3, col4 = st.columns(4)
-
                 # Compute SHAP values for the client
                 shap_values_client = explainer.shap_values(data_sample)
 
@@ -544,13 +498,13 @@ def main():
                 # Display features descriptions:
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.write(
-                        'Les variables suivantes font augmenter le score de ce client 👍📈 (diminuer la probabilité de non-remboursement) :')
+                    st.write('Les variables suivantes font augmenter le score de ce client '
+                             '👍📈 (diminuer la probabilité de non-remboursement) :')
                     shap_negat_df = shap_sample_df.sort_values(by='SHAP', ascending=True)[:10]
                     st.write(shap_negat_df[['Row_name', 'SHAP', 'Description']])
                 with col2:
-                    st.write(
-                        'Les variables suivantes font diminuer le score de ce client 👎📉 (augmenter la probabilité de non-remboursement) :')
+                    st.write('Les variables suivantes font diminuer le score de ce client '
+                             '👎📉 (augmenter la probabilité de non-remboursement) :')
                     shap_posit_df = shap_sample_df.sort_values(by='SHAP', ascending=False)[:10]
                     st.write(shap_posit_df[['Row_name', 'SHAP', 'Description']])  # nicer but shows index...
                 # Colors
@@ -589,15 +543,15 @@ def main():
                 default_neg_color = "#008bfb"
                 for fc in plt.gcf().get_children():
                     for fcc in fc.get_children():
-                        if (isinstance(fcc, matplotlib.patches.FancyArrow)):
-                            if (matplotlib.colors.to_hex(fcc.get_facecolor()) == default_pos_color):
+                        if isinstance(fcc, matplotlib.patches.FancyArrow):
+                            if matplotlib.colors.to_hex(fcc.get_facecolor()) == default_pos_color:
                                 fcc.set_facecolor(positive_color)
-                            elif (matplotlib.colors.to_hex(fcc.get_facecolor()) == default_neg_color):
+                            elif matplotlib.colors.to_hex(fcc.get_facecolor()) == default_neg_color:
                                 fcc.set_color(negative_color)
-                        elif (isinstance(fcc, plt.Text)):
-                            if (matplotlib.colors.to_hex(fcc.get_color()) == default_pos_color):
+                        elif isinstance(fcc, plt.Text):
+                            if matplotlib.colors.to_hex(fcc.get_color()) == default_pos_color:
                                 fcc.set_color(positive_color)
-                            elif (matplotlib.colors.to_hex(fcc.get_color()) == default_neg_color):
+                            elif matplotlib.colors.to_hex(fcc.get_color()) == default_neg_color:
                                 fcc.set_color(negative_color)
                 plt.setp(ax.get_xticklabels(), color="white")
                 plt.setp(ax.get_yticklabels(), color="white")
@@ -610,48 +564,39 @@ def main():
     # ======= Show model info  ======= #
     with tab4:
         st.header('⚙️Informations sur le modèle')
-        # Get the width of the Streamlit page
-        page_width = st.config.get_option("server.maxUploadSize")
-
-        # Print the width
-        st.write(f"The width of the Streamlit page is {page_width}px.")
 
         # Metrics
         st.subheader('Métriques')
         cols = st.columns(6)
         with cols[0]:
-            st.metric('Score métier', np.round(metrics['metrics.cv_test_custom_score'][0], 3))
+            st.metric('Score métier', np.round(metrics['metrics.cv_test_custom_score'][0], 2))
         with cols[1]:
-            st.metric('ROC AUC', np.round(metrics['metrics.cv_test_roc_auc'][0], 3))
+            st.metric('ROC AUC', np.round(metrics['metrics.cv_test_roc_auc'][0], 2))
         with cols[2]:
-            st.metric('F1 score', np.round(metrics['metrics.cv_test_f1'][0], 3))
+            st.metric('F1 score', np.round(metrics['metrics.cv_test_f1'][0], 2))
         with cols[3]:
-            st.metric('Accuracy', np.round(metrics['metrics.cv_test_accuracy'][0], 3))
+            st.metric('Accuracy', np.round(metrics['metrics.cv_test_accuracy'][0], 2))
 
         # Summary plots
         matplotlib.rcParams['text.color'] = 'white'
         st.subheader('Importance des features')
-        st.write(
-            'Une valeur élevée implique une une forte importance de la variable dans le calcul des prédictions du modèle')
-        fig, ax = plt.subplots(facecolor='None')
-        shap.summary_plot(shap_values, features=Xtrain[:N_shap_samples],
-                          plot_type="bar", max_display=15,
-                          color='forestgreen', axis_color='w')
-        # Set colors to white
-        ax.set_facecolor("None")
-        # plt.setp(ax.get_xticklabels(), color="white", fontsize=10)
-        # plt.setp(ax.get_yticklabels(), color="white", fontsize=10)
-        for spine in ax.spines.values():
-            spine.set_color('white')
-        with st.container():
-            st_shap(fig)
-        # st_shap(fig, height=600, width=1000)
+        st.write('Une valeur élevée implique une une forte importance de la variable dans '
+                 'le calcul des prédictions du modèle')
+
+        top_features = feature_importances_df.sort_values(by='SHAP', ascending=False)[:15]
+        fig = px.bar(top_features, x='SHAP', y=top_features.index, orientation='h',
+                     color_discrete_sequence=['forestgreen'])
+        fig.update_xaxes(title_text='mean(|SHAP value|)<br>Impact moyen sur la prédiction du modèle', tickfont_size=16,
+                         title_font_size=20)
+        fig.update_yaxes(title_text='', tickfont_size=16)
+        fig.update_layout(height=600, yaxis=dict(autorange="reversed"))
+        st.plotly_chart(fig, use_container_width=True, theme='streamlit')
+
         st.subheader('Distribution de la contribution des features')
         st.write('''Les couleurs chaudes désignent une valeur élevée sur la feature, les couleurs froides une valeur basse.  
-        Par exemple, les points rouges avec une valeur SHAP positive (à droite) désignent des clients pour qui une augmentation de la valeur
-        sur la feature implique une augmentation de la probabilité de non-remboursement.  A l'opposé, les points rouges avec une valeur SHAP négative
+        Par exemple, les points verts avec une valeur SHAP positive (à droite) désignent des clients pour qui une augmentation de la valeur
+        sur la feature implique une augmentation de la probabilité de non-remboursement.  A l'opposé, les points verts avec une valeur SHAP négative
         (à gauche) désignent des clients pour qui une augmentation de la valeur sur la feature implique une diminution de la probabilité de non-remboursement.''')
-
         fig, ax = plt.subplots(facecolor='None')
         shap.summary_plot(shap_values, features=Xtrain[:N_shap_samples],
                           plot_type='dot', max_display=15, cmap="RdYlGn", alpha=1, axis_color='w', show=False)
@@ -661,9 +606,17 @@ def main():
         plt.setp(ax.get_yticklabels(), color="white", fontsize=10)
         for spine in ax.spines.values():
             spine.set_color('white')
-        with st.container():
-            st_shap(fig, height=600)
-        # st_shap(fig, height=600, width=1000)
+        fig.axes[1].tick_params(colors='white')  # colorbar
+        st_shap(fig, height=600, width=1000)
+
+        st.write('')
+        st.write('')
+        st.subheader('Analyse du data drift')
+        st.write('''Cette analyse réalisée en utilisant un jeu de données de test vise à évaluer la stabilité
+                    des données au cours du temps. Le jeu de données de test étant utilisé pour simuler une
+                    possible évolution future du jeu de données d'entraînement.''')
+        html_file = open("data/evidently_Report_DataDriftPreset.html", 'r', encoding='utf-8').read()
+        html(html_file, height=800, scrolling=True)
 
     st.markdown("---")
 
