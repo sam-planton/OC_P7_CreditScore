@@ -477,6 +477,7 @@ def main():
 
     # ======= Score explanations  ======= #
     with tab3:
+        score = 50
         st.header('📊 Explications du score')
         if client_id == clist[0]:
             st.write(
@@ -500,12 +501,12 @@ def main():
                 with col1:
                     st.write('Les variables suivantes font augmenter le score de ce client '
                              '👍📈 (diminuer la probabilité de non-remboursement) :')
-                    shap_negat_df = shap_sample_df.sort_values(by='SHAP', ascending=True)[:10]
+                    shap_negat_df = shap_sample_df.sort_values(by='SHAP', ascending=True).iloc[:10]
                     st.write(shap_negat_df[['Row_name', 'SHAP', 'Description']])
                 with col2:
                     st.write('Les variables suivantes font diminuer le score de ce client '
                              '👎📉 (augmenter la probabilité de non-remboursement) :')
-                    shap_posit_df = shap_sample_df.sort_values(by='SHAP', ascending=False)[:10]
+                    shap_posit_df = shap_sample_df.sort_values(by='SHAP', ascending=False).iloc[:10]
                     st.write(shap_posit_df[['Row_name', 'SHAP', 'Description']])  # nicer but shows index...
                 # Colors
                 negative_color = "#228B22"  # green
