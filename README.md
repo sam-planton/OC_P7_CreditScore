@@ -11,10 +11,10 @@ Lien du dashboard en ligne : 👉 https://sp-oc-p7-dashboard.herokuapp.com/ 👈
 Le modèle utilisé est un modèle de classification utilisant le gradient boosting : "LGBMClassifier". Il est entraîné et optimisé en utilisant les librairies [scikit-learn](https://scikit-learn.org/) et [LightGBM](https://lightgbm.readthedocs.io/).
 
 ## API de prédiction
-Une API de prédiction est déployée via [Heroku](https://dashboard.heroku.com/). Il s'agit d'une application Flask utilisant le modèle entraîné et renvoyant, à partir des données d'un client fournies, la probabilité de défaut prédite.
+Une API de prédiction est déployée via [Heroku](https://www.heroku.com/). Il s'agit d'une application Flask utilisant le modèle entraîné et renvoyant, à partir des données d'un client fournies, la probabilité de défaut prédite.
 
 ## Dashboard
-Un dashboard réalisé sous [Streamlit](https://streamlit.io/) et déployé via [Heroku](https://dashboard.heroku.com/) permet d'explorer les données et de récupérer les prédictions du modèles à partir de l'API pour un échantillon de clients fourni. Des explications sur les prédictions locales et globales (importance des features, via librairie SHAP) sont aussi fournies.
+Un dashboard réalisé sous [Streamlit](https://streamlit.io/) et déployé via [Heroku](https://www.heroku.com/) permet d'explorer les données et de récupérer les prédictions du modèles à partir de l'API pour un échantillon de clients fourni. Des explications sur les prédictions locales et globales (importance des features, via librairie SHAP) sont aussi fournies.
 
 ## Principaux fichiers
 - `api.py` : application Flask de l'API de prédiction. Le fichier `\api_proc\Procfile` sert au déploiement.
