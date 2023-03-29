@@ -21,3 +21,4 @@ Un dashboard réalisé sous [Streamlit](https://streamlit.io/) et déployé via 
 - `dashboard.py` : application Streamlit. Le fichier `\dashboard_proc\Procfile` sert au déploiement.
 - Dossier `\data\` contient les données d'entraînement prétraitées ainsi que d'autres de données utilisées dans le dasboard (ex: données clients test)
 - Dossier `\data\model` contient le modèle entraîné, exporté via [MLflow](https://mlflow.org/)
+
