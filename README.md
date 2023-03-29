@@ -19,5 +19,5 @@ Un dashboard réalisé sous [Streamlit](https://streamlit.io/) et déployé via 
 ## Principaux fichiers
 - `api.py` : application Flask de l'API de prédiction. Le fichier `\api_proc\Procfile` sert au déploiement.
 - `dashboard.py` : application Streamlit. Le fichier `\dashboard_proc\Procfile` sert au déploiement.
-- Dossier `data.py` contient les données d'entraînement prétraitées ainsi que d'autres de données utilisées dans le dasboard (ex: données clients test)
-- Dossier `data\model` contient le modèle entraîné, exporté via [MLflow](https://mlflow.org/)
+- Dossier `\data\` contient les données d'entraînement prétraitées ainsi que d'autres de données utilisées dans le dasboard (ex: données clients test)
+- Dossier `\data\model` contient le modèle entraîné, exporté via [MLflow](https://mlflow.org/)
