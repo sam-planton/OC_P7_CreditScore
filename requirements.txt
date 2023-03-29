@@ -13,3 +13,4 @@ gunicorn
 flask
 boto3
 joblib
+lightgbm
