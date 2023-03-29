@@ -273,7 +273,7 @@ def main():
     metrics = pd.read_csv(op.join('data', 'run_info.csv'))
 
     # Compute feature importances based on the SHAP values
-    N_shap_samples = 300
+    N_shap_samples = 500
     explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
     feature_importances_df = pd.DataFrame(np.mean(np.abs(shap_values), axis=0), index=Xtrain.columns, columns=['SHAP'])
 
