@@ -1,4 +1,5 @@
-![workflow status](https://github.com/sam-planton/OC_P7_CreditScore/actions/workflows/deploy_API&dashboard_workflow.yml/badge.svg)
+![workflow status](https://github.com/sam-planton/OC_P7_CreditScore/actions/workflows/deploy_API&dashboard_workflow.yml/badge.svg) 
+[![CC BY 4.0][cc-by-shield]][cc-by]
 # OC P7 CreditScore 🏦
 Cette application, réalisée dans le cadre d'un projet de formation, vise à attribuer un "score crédit" à un client demandant un crédit bancaire (et dont un certain nombre d'informations sont connues). Ce score est basé sur la probabilité de défaut du client, déterminée à partir d'un modèle de machine learning.
 
@@ -22,3 +23,12 @@ Un dashboard réalisé sous [Streamlit](https://streamlit.io/) et déployé via 
 - Dossier `\data\` contient les données d'entraînement prétraitées ainsi que d'autres de données utilisées dans le dasboard (ex: données clients test)
 - Dossier `\data\model` contient le modèle entraîné, exporté via [MLflow](https://mlflow.org/)
 
+---
+This work is licensed under a
+[Creative Commons Attribution 4.0 International License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
