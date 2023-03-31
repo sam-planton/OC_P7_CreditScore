@@ -60,8 +60,8 @@ def compute_shap(_model, Xtrain, N_shap_samples):
     # get only predict of 2nd class
     def predict_fn(x): return _model.predict_proba(x)[:, 1]
 
-    explainer = shap.KernelExplainer(predict_fn, shap.kmeans(Xtrain, 20))
-    shap_values = explainer.shap_values(Xtrain.sample(Nsamples), gc_collect=True)
+    explainer = shap.KernelExplainer(predict_fn, shap.kmeans(Xtrain, 10))
+    shap_values = explainer.shap_values(Xtrain[:Nsamples], nsamples=1024, gc_collect=True, verbose=0)
 
     return explainer, shap_values
 
@@ -143,7 +143,7 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
                     fig.update_yaxes(showticklabels=True, showgrid=False, title='')
 
                 # Show plot
-                fig.update_layout(height=500)
+                fig.update_layout(height=450)
                 st.plotly_chart(fig, use_container_width=True, theme=theme_plotly)
 
                 # Show info about var and group
@@ -267,6 +267,9 @@ def main():
     # Flask API endpoint to return model prediction
     API_endpoint = "https://sp-oc-p7-api.herokuapp.com/predict"
 
+    # Local debugging
+    debug = True
+
     # =========================== FETCH DATA & MODEL =========================== #
     Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df = fetch_data()
     model = fetch_model()
@@ -274,12 +277,17 @@ def main():
 
     # Compute feature importances based on the SHAP values
     N_shap_samples = 500
+    if debug:
+        N_shap_samples = 10
     explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
     feature_importances_df = pd.DataFrame(np.mean(np.abs(shap_values), axis=0), index=Xtrain.columns, columns=['SHAP'])
 
     # =========================== DASHBOARD ITEMS =========================== #
     # Title
     st.title('🏦 Prediction score crédit 💵')
+
+    if debug:
+        st.write('***** DEBUG *****')
 
     # Style
     with open('style.css') as f:
@@ -477,12 +485,13 @@ def main():
 
     # ======= Score explanations  ======= #
     with tab3:
-        score = 50
         st.header('📊 Explications du score')
         if client_id == clist[0]:
             st.write(
                 '_Veuillez sélectionner un des clients dans le menu de la barre latérale_')
         else:
+            if debug:
+                score = 50
             if score == 0:
                 st.write('_Veuillez calculer le score du client_')
             else:
@@ -499,13 +508,14 @@ def main():
                 # Display features descriptions:
                 col1, col2 = st.columns(2)
                 with col1:
-                    st.write('Les variables suivantes font augmenter le score de ce client '
-                             '👍📈 (diminuer la probabilité de non-remboursement) :')
+                    st.write(
+                        '<span style="color:forestgreen">Les variables suivantes font augmenter le score de ce client '
+                        '👍📈 (diminuer la probabilité de non-remboursement) :</span>', unsafe_allow_html=True)
                     shap_negat_df = shap_sample_df.sort_values(by='SHAP', ascending=True).iloc[:10]
                     st.write(shap_negat_df[['Row_name', 'SHAP', 'Description']])
                 with col2:
-                    st.write('Les variables suivantes font diminuer le score de ce client '
-                             '👎📉 (augmenter la probabilité de non-remboursement) :')
+                    st.write('<span style="color:red">Les variables suivantes font diminuer le score de ce client '
+                             '👎📉 (augmenter la probabilité de non-remboursement) :</span>', unsafe_allow_html=True)
                     shap_posit_df = shap_sample_df.sort_values(by='SHAP', ascending=False).iloc[:10]
                     st.write(shap_posit_df[['Row_name', 'SHAP', 'Description']])  # nicer but shows index...
                 # Colors
@@ -518,13 +528,11 @@ def main():
                     'Les variables en vert font baisser la probabilité de défaut (augmenter le score), '
                     'les variables en rouge la font augmenter (diminuer le score). '
                     'La taille de chaque barre est proportionnelle à l''impact de la variable sur le score.')
-                # fig, ax = plt.subplots(facecolor='None')
-
                 fig = shap.force_plot(explainer.expected_value, shap_values_client,
                                       data_sample, plot_cmap=[positive_color, negative_color])
+                # st.write(plt.gcf().get_children())
                 with st.container():
                     st_shap(fig)  # Display the plot in the Streamlit app
-                # st_shap(fig, width=1200)  # Display the plot in the Streamlit app
 
                 # Waterfall_plot
                 st.subheader('Waterfall plot')
@@ -534,10 +542,11 @@ def main():
                     'La taille de chaque barre est proportionnelle à l''impact de la variable sur le score.')
                 fig, ax = plt.subplots(facecolor='None')
                 ax.set_facecolor("None")
+                data_sample_shortnames = data_sample.copy().rename(columns=lambda x: x[:25])
                 shap.waterfall_plot(shap.Explanation(values=shap_values_client[0],
                                                      base_values=explainer.expected_value,
-                                                     data=data_sample.iloc[0]),
-                                    max_display=15, show=False)
+                                                     data=data_sample_shortnames.iloc[0]),
+                                    max_display=10, show=False)
                 # Change the colormap of the artists
                 # Default SHAP colors
                 default_pos_color = "#ff0051"
@@ -556,11 +565,16 @@ def main():
                                 fcc.set_color(negative_color)
                 plt.setp(ax.get_xticklabels(), color="white")
                 plt.setp(ax.get_yticklabels(), color="white")
-                for spine in ax.spines.values():
-                    spine.set_color('white')
-                with st.container():
-                    st_shap(fig, height=700)
-                # st_shap(fig, height=700, width=1000)
+
+                axis1 = plt.gcf().get_children()[1]
+                axis2 = plt.gcf().get_children()[2]
+                axis3 = plt.gcf().get_children()[3]
+                axis1.tick_params(colors='white')  # changes bottom ticks color
+                axis3.tick_params(colors='white')  # changes top annotation color
+                axis2.tick_params(colors='white')  # changes bottom annotation color
+                axis3.spines['bottom'].set_color("white")
+
+                st_shap(fig, height=600)
 
     # ======= Show model info  ======= #
     with tab4:
@@ -585,8 +599,12 @@ def main():
                  'le calcul des prédictions du modèle')
 
         top_features = feature_importances_df.sort_values(by='SHAP', ascending=False)[:15]
+        top_features = top_features.reset_index().merge(description_df, left_on='index', right_on='Row_name',
+                                                        how='left').set_index('index')
+        top_features.fillna('-missing-', inplace=True)
+        st.write(top_features)
         fig = px.bar(top_features, x='SHAP', y=top_features.index, orientation='h',
-                     color_discrete_sequence=['forestgreen'])
+                     color_discrete_sequence=['forestgreen'], hover_data=['Description'])
         fig.update_xaxes(title_text='mean(|SHAP value|)<br>Impact moyen sur la prédiction du modèle', tickfont_size=16,
                          title_font_size=20)
         fig.update_yaxes(title_text='', tickfont_size=16)
@@ -600,7 +618,7 @@ def main():
         (à gauche) désignent des clients pour qui une augmentation de la valeur sur la feature implique une diminution de la probabilité de non-remboursement.''')
         fig, ax = plt.subplots(facecolor='None')
         im = shap.summary_plot(shap_values, features=Xtrain[:N_shap_samples],
-                          plot_type='dot', max_display=15, cmap="RdYlGn", alpha=1, axis_color='w', show=False)
+                               plot_type='dot', max_display=15, cmap="RdYlGn", alpha=1, axis_color='w', show=False)
         # Set colors to white
         ax.set_facecolor("None")
         plt.setp(ax.get_xticklabels(), color="white", fontsize=10)
