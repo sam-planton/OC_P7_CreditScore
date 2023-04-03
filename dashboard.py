@@ -97,9 +97,10 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
                                   annotation=dict(text="Client", font_size=18, showarrow=True, arrowhead=1, ax=0,
                                                   ay=-20, arrowcolor='white'), annotation_position='top')
                     # Set layout
+                    # fig.update_layout(yaxis_type="log")
                     fig.update_traces(line=dict(width=3))  # only if show_hist=False
                     fig.update_layout(xaxis=dict(tickfont=dict(size=18)))
-                    fig.update_layout(legend=dict(orientation='h', yanchor='top', y=-0.15, xanchor='left', x=0, ), )
+                    fig.update_layout(legend=dict(orientation='h', yanchor='top', y=-0.15, xanchor='left', x=0, font=dict(size=16)))
                     fig.update_yaxes(showticklabels=False, showgrid=False, title='Densité', title_font=dict(size=18),
                                      tickfont=dict(size=18))
 
@@ -136,7 +137,7 @@ def show_client_data(data_client, data_group, description_df, varlist, do_subgrp
                                            arrowhead=1, arrowcolor='white')
                     # Set layout
                     fig.update_layout(
-                        legend=dict(orientation='h', yanchor='top', y=1.15, xanchor='left', x=0, title=''))
+                        legend=dict(orientation='h', yanchor='top', y=1.15, xanchor='left', x=0, title='', font=dict(size=16)))
                     fig.update_layout(yaxis=dict(tickmode='array', ticktext=[val0, val1], tickvals=[0, 1]))
                     fig.update_layout(xaxis=dict(tickfont=dict(size=18)), yaxis=dict(tickfont=dict(size=18)))
                     fig.update_xaxes(title='Nombre de clients')
@@ -176,7 +177,8 @@ def show_client_data_bivariate(data_client, data_group, varlist):
         var3 = 'Score'
         # We add jitter for binary (categorical) variables
         jitter_amount = 0.06  # adjust the amount of jitter as needed
-        data_group_jitter = data_group[:500].copy()  # make a copy of the data
+        # data_group_jitter = data_group[:10000].copy()  # make a copy of the data
+        data_group_jitter = data_group.copy()  # make a copy of the data
         if len(np.unique(data_group[var1])) == 2:
             data_group_jitter[var1] += np.random.normal(0, jitter_amount, len(data_group_jitter))
         if len(np.unique(data_group[var2])) == 2:
@@ -184,20 +186,20 @@ def show_client_data_bivariate(data_client, data_group, varlist):
         data_group_jitter = data_group_jitter.round(2)
         if grphtype == 'Scatterplot':
             # With sccaterplot
-            fig = px.scatter(data_group_jitter, x=var1, y=var2, color=var3, color_continuous_scale='RdYlGn')
+            fig = px.scatter(data_group_jitter.sample(1000), x=var1, y=var2, color=var3, color_continuous_scale='RdYlGn')
         elif grphtype == 'Heatmap':
             # With heatmap
             fig = px.density_contour(data_group_jitter, x=var1, y=var2, z=var3, histfunc="avg")
             fig.update_traces(contours_coloring="fill", contours_showlabels=False, colorscale='RdYlGn')
             fig.update_traces(colorbar_title='Score Moyen', selector=dict(type='histogram2dcontour'))
-            # fig = px.density_heatmap(data_group, x=var1, y=var2, z=var3, histfunc="avg",
-            #                          color_continuous_scale='RdYlGn', nbinsx=100, nbinsy=100)
         # Add client dot
         fig.add_scatter(x=[data_client[var1].values[0]], y=[data_client[var2].values[0]], mode='markers', name='Client',
                         marker=dict(size=18, color='yellow', line=dict(width=2, color='black')))
         # Move the legend for the yellow dot above the colorbar
-        fig.update_layout(legend=dict(yanchor="top", y=1.08, xanchor="left", x=0.01))
+        fig.update_layout(legend=dict(yanchor="top", y=1.08, xanchor="left", x=0.01, font=dict(size=16)))
         # Layout
+        fig.update_yaxes(title_font=dict(size=18), tickfont=dict(size=18))
+        fig.update_xaxes(title_font=dict(size=18), tickfont=dict(size=18))
         fig.update_coloraxes(colorbar_title_side='right')
         fig.update_layout(height=650, width=650)
         st.plotly_chart(fig, use_container_width=False, theme=None)
@@ -268,7 +270,7 @@ def main():
     API_endpoint = "https://sp-oc-p7-api.herokuapp.com/predict"
 
     # Local debugging
-    debug = True
+    debug = False
 
     # =========================== FETCH DATA & MODEL =========================== #
     Xtrain, Xtrain_addinfo, Xtest, Xtest_addinfo, description_df = fetch_data()
@@ -295,8 +297,8 @@ def main():
 
     # Info
     st.markdown("""
-                Cette application permet d'attribuer un **"score crédit"**
-                 à un client basé sur la probabilité de défaut du client,
+                Cette application sert d'aide à la décision dans le cadre de l'attribution d'un crédit bancaire.
+                Elle permet d'attribuer un **"score crédit"** à un client, basé sur la probabilité de défaut,
                 déterminée à partir d'un modèle de machine learning.  
                 Les données utilisées proviennent du jeu de données Kaggle
                 [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk/overview)
@@ -342,7 +344,6 @@ def main():
     if client_id == clist[0]:
         pass
     else:
-
         # Client data
         data_sample = Xtest.iloc[[clist.index(client_id) - 1]]
         data_sample_addinfo = Xtest_addinfo.iloc[[clist.index(client_id) - 1]]
@@ -449,7 +450,7 @@ def main():
 
                 # === Get prediction and score
                 # using API on the server
-                st.write('Model API: ' + API_endpoint)
+                # st.write('Model API: ' + API_endpoint)
                 response = requests.post(API_endpoint, json=data_sample.to_dict())
                 pred = response.json()[0]
 
@@ -457,31 +458,27 @@ def main():
                 # pred = model.predict_proba(data_sample)[0][1]
                 score = (1 - pred) * 100
 
-                col1, col2 = st.columns([0.5, 1])
+                col1, col2 = st.columns([1, 1])
                 with col1:
 
                     # === Gauge figure with progress animation
                     gauge_animated_figure(score, score_threshold, frame_duration=0.05)
-
-                    # === st.metric
+                    st.write("<center>Centered text</center>", unsafe_allow_html=True)
+                    # === Message
                     with col2:
-                        subcol1, subcol2 = st.columns([0.5, 1])
-                        with subcol1:
-                            st.metric('Score crédit:', value=('%d/100' % score))
-                            st.write('Probabilité de ne pas rembourser : %.01f%%' % (pred * 100))
-                            st.sidebar.metric('Score :', value=('%d/100' % score))
+                        # st.metric('Score crédit:', value=('%d/100' % score))
+                        st.sidebar.metric('Score :', value=('%d/100' % score))
+                        if score < score_threshold:
+                            st.markdown(
+                                '<h1 style="text-align:center;color:red;font-weight:700;font-size:26px">Risque de défaut élevé.  \n\nRecommandation : refuser le crédit.</h1>',
+                                unsafe_allow_html=True)
+                        elif score >= score_threshold:
+                            st.markdown(
+                                '<h1 style="text-align:center;color:green;font-weight:700;font-size:26px">Risque de défaut faible.  \n\nRecommandation : accorder le crédit.</h1>',
+                                unsafe_allow_html=True)
+                            st.balloons()
+                        st.write("<center>Probabilité de défaut de remboursement : %.01f%%</center>" % (pred * 100), unsafe_allow_html=True)
 
-                        # === Message
-                        with subcol2:
-                            if score < score_threshold:
-                                st.markdown(
-                                    '<h1 style="text-align:center;color:red;font-weight:700;font-size:26px">Risque de défaut élevé.  \n\nRecommandation : refuser le crédit.</h1>',
-                                    unsafe_allow_html=True)
-                            elif score >= score_threshold:
-                                st.markdown(
-                                    '<h1 style="text-align:center;color:green;font-weight:700;font-size:26px">Risque de défaut faible.  \n\nRecommandation : accorder le crédit.</h1>',
-                                    unsafe_allow_html=True)
-                                st.balloons()
 
     # ======= Score explanations  ======= #
     with tab3:
@@ -588,7 +585,7 @@ def main():
         with cols[1]:
             st.metric('ROC AUC', np.round(metrics['metrics.cv_test_roc_auc'][0], 2))
         with cols[2]:
-            st.metric('F1 score', np.round(metrics['metrics.cv_test_f1'][0], 2))
+            st.metric('F1 score', np.round(metrics['metrics.cv_test_f1_best_thresh'][0], 2))
         with cols[3]:
             st.metric('Accuracy', np.round(metrics['metrics.cv_test_accuracy'][0], 2))
 
