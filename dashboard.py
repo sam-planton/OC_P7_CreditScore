@@ -20,7 +20,7 @@ def fetch_data():
     # To lighten the load in memory, set columns to float32 directly when loading
     # (load a sample of the dataset to identify columns)
 
-    nrows_train = 14950
+    nrows_train = 9950
     nrows_test = 50
 
     # Load the training data
@@ -51,7 +51,7 @@ def fetch_model():
     return model
 
 
-@st.cache_resource
+@st.cache_data
 def compute_shap(_model, Xtrain, N_shap_samples):
     # How many samples to use (more samples takes time!)
     Nsamples = N_shap_samples
@@ -278,7 +278,7 @@ def main():
     metrics = pd.read_csv(op.join('data', 'run_info.csv'))
 
     # Compute feature importances based on the SHAP values
-    N_shap_samples = 200
+    N_shap_samples = 100
     if debug:
         N_shap_samples = 10
     explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
