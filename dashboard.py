@@ -35,7 +35,7 @@ def fetch_data():
     float_cols = [c for c in sample_df if sample_df[c].dtype == "float64"]
     float32_cols = {c: np.float32 for c in float_cols}
     Xtest = pd.read_csv('data/Xtest.csv', engine='c', dtype=float32_cols, nrows=nrows_test, index_col='SK_ID_CURR')
-    Xtest_addinfo = pd.read_csv('data/Xtest_addinfo.csv', nrows=nrows_train, index_col='SK_ID_CURR')
+    Xtest_addinfo = pd.read_csv('data/Xtest_addinfo.csv', nrows=nrows_test, index_col='SK_ID_CURR')
 
     # Load features description
     description_df = pd.read_csv('data/description_df.csv')
@@ -51,7 +51,7 @@ def fetch_model():
     return model
 
 
-@st.cache_data
+@st.cache_resource
 def compute_shap(_model, Xtrain, N_shap_samples):
     # How many samples to use (more samples takes time!)
     Nsamples = N_shap_samples
