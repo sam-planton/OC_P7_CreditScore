@@ -20,7 +20,7 @@ def fetch_data():
     # To lighten the load in memory, set columns to float32 directly when loading
     # (load a sample of the dataset to identify columns)
 
-    nrows_train = 19950
+    nrows_train = 14950
     nrows_test = 50
 
     # Load the training data
@@ -278,7 +278,7 @@ def main():
     metrics = pd.read_csv(op.join('data', 'run_info.csv'))
 
     # Compute feature importances based on the SHAP values
-    N_shap_samples = 500
+    N_shap_samples = 200
     if debug:
         N_shap_samples = 10
     explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
@@ -476,7 +476,7 @@ def main():
                             st.markdown(
                                 '<h1 style="text-align:center;color:green;font-weight:700;font-size:26px">Risque de défaut faible.  \n\nRecommandation : accorder le crédit.</h1>',
                                 unsafe_allow_html=True)
-                            st.balloons()
+                            # st.balloons()
                         st.write("<center>Probabilité de défaut de remboursement : %.01f%%</center>" % (pred * 100), unsafe_allow_html=True)
 
 
@@ -599,7 +599,7 @@ def main():
         top_features = top_features.reset_index().merge(description_df, left_on='index', right_on='Row_name',
                                                         how='left').set_index('index')
         top_features.fillna('-missing-', inplace=True)
-        st.write(top_features)
+
         fig = px.bar(top_features, x='SHAP', y=top_features.index, orientation='h',
                      color_discrete_sequence=['forestgreen'], hover_data=['Description'])
         fig.update_xaxes(title_text='mean(|SHAP value|)<br>Impact moyen sur la prédiction du modèle', tickfont_size=16,
