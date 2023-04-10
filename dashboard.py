@@ -281,8 +281,9 @@ def main():
     N_shap_samples = 100
     if debug:
         N_shap_samples = 10
-    explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
-    feature_importances_df = pd.DataFrame(np.mean(np.abs(shap_values), axis=0), index=Xtrain.columns, columns=['SHAP'])
+    with st.spinner("Veuillez patienter (1 à 2 min) pendant le calcul de l'importance des variables..."):
+        explainer, shap_values = compute_shap(model, Xtrain, N_shap_samples)
+        feature_importances_df = pd.DataFrame(np.mean(np.abs(shap_values), axis=0), index=Xtrain.columns, columns=['SHAP'])
 
     # =========================== DASHBOARD ITEMS =========================== #
     # Title
@@ -463,7 +464,6 @@ def main():
 
                     # === Gauge figure with progress animation
                     gauge_animated_figure(score, score_threshold, frame_duration=0.05)
-                    st.write("<center>Centered text</center>", unsafe_allow_html=True)
                     # === Message
                     with col2:
                         # st.metric('Score crédit:', value=('%d/100' % score))
